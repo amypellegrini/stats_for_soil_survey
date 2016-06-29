@@ -15,7 +15,7 @@ opts_chunk$set(message=FALSE, warning=FALSE, background="#F7F7F7", fig.retina=1,
 
 ![Statistics for pedologists course banner image](figure/logo.jpg)  
 
-# CHAPTER 3: Sampling Design
+# Chapter 3: Sampling Design
 
 - [3.0 Introduction](#intro)
 - [3.1 Sampling Strategies](#strat) 
