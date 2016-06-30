@@ -448,6 +448,7 @@ sd(clay)
 ```
 
 **Coefficient of Variation**
+
 The coefficient of variation (CV) is a relative (i.e., unitless) measure of standard deviation:![R GUI image](figure/ch4_fig24.jpg).  
 
 CV is calculated by dividing the standard deviation by the mean and multiplying by 100. Because standard deviation varies in magnitude with the value of the mean, the CV is useful for comparing relative variation amongst different datasets. Webster (2001), however, discourages the use of CV to compare different variables. Webster (2001) also stresses that CV is reserved for variables that have an absolute 0. An example is clay content. CV may be calculated for the sample dataset as the following:  
@@ -458,9 +459,11 @@ cv
 ```
 
 
-**Quantiles (a.k.a. Percentiles)** - the percentile is the value that cuts off the first nth percent of the data values when sorted in ascending order.
+**Quantiles (a.k.a. Percentiles)**
 
-The default for the `quantile()` function returns the  min, 25th percentile, median or 50th percentile, 75th percentile, and max, known as the five number summary originally proposed by Tukey. Other probabilities however can be used. At present the 5th, 50th, and 95th are being proposed for determining the range in characteristics (RIC) for a given soil property.
+The percentile is the value that cuts off the first nth percent of the data values when sorted in ascending order.
+
+The default for the `quantile()` function returns the  min, 25th percentile, 50th percentile (the media), 75th percentile, and max. These values are the five number summary originally proposed by Tukey. Other probabilities, however, can be used. At present, the 5th, 50th, and 95th percentiles are proposed for determining the range in characteristics (RIC) for a given soil property.
 
 ```{r}
 quantile(clay)
@@ -470,16 +473,18 @@ quantile(clay)
 quantile(clay, c(0.05, 0.5, 0.95))
 ```
 
-Thus, for the five number summary 25% of the observations fall between each of the intervals. Quantiles are a useful metric because they are largely unaffected by the distribution of the data, and have a simple interpretation.
+For the five number summary, 25% of the observations fall between each of the intervals. Quantiles are a useful metric because they are largely unaffected by the distribution of the data and have a simple interpretation.
 
 
-**Range**  is the difference between the highest and lowest measurement of a group. Using the sample data it may be determined as:  
+**Range**
+
+The range is the difference between the highest measurement of a group and the lowest. Using the sample data, the minimum and maximum values observed may be determined by the following:  
 
 ```{r}
 range(clay)
 ```
 
-which returns the minimum and maximum values observed, or:  
+The value of the range may be determined by the following:  
 
 ```{r}
 diff(range(clay))
@@ -489,10 +494,10 @@ diff(range(clay))
 # max(clay) - min(clay)
 ```
 
-which returns the value of the range  
 
+**Interquartile Range**
 
-**Interquartile Range** (IQR)  is the range from the upper (75%) quartile to the lower (25%) quartile. This represents 50% of the observations occurring in the mid-range of a sample. IQR is a robust measure of dispersion, unaffected by the distribution of data. In soil survey lingo you could consider the IQR to estimate the central concept of a soil property. IQR may be calculated for the sample dataset as:  
+The interquartiel range (IQR) is the range from the upper (75%) quartile to the lower (25%) quartile. This represents the 50% of observations occurring in the midrange of a sample. IQR is a robust measure of dispersion. It is unaffected by the distribution of data. In soil survey, you could consider the IQR to estimate the central concept of a soil property. IQR may be calculated for the sample dataset as follows:  
 
 ```{r}
 IQR(clay)
