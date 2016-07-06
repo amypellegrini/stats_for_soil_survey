@@ -401,7 +401,6 @@ abline(v = amean, col = "orange") # plot the mean as a orange vertical line
 
 Figures 7a and 7b.—Comparison of the mean and median for clay and rock fragments.  
 
-
 The blue vertical line in figures 7a and 7b represents the breakpoint for the median, and the orange line represents the mean. The median is a more robust measure of central tendency than the mean. In order for the mean to be a useful measure, the data distribution must be approximately normal. The further the data departs from normality, the less meaningful the mean becomes. The median is independent of the data distribution, i.e., 50% of the samples are below the median and 50% are above. The example in figure 7a for clay indicates that distribution is approximately normal. For the rock fragments in figure 7b, however, you can see a long tailed distribution (e.g., skewed). Using the mean in this instance would overestimate the rock fragments. Although, in this instance, the difference between the mean and median is only `r round(amean - amed)` percent.
 
 **Mode**
@@ -450,6 +449,7 @@ sd(clay)
 ```
 
 **Coefficient of Variation**  
+
 The coefficient of variation (CV) is a relative (i.e., unitless) measure of standard deviation:![R GUI image](figure/ch4_fig24.jpg). *Editor's note: Please review the image used for the equation. Is it intentional that there are 2 lines separating the numerator and denominator in s//x?* 
 
 CV is calculated by dividing the standard deviation by the mean and multiplying by 100. Because standard deviation varies in magnitude with the value of the mean, the CV is useful for comparing relative variation among different datasets. Webster (2001), however, discourages the use of CV to compare different variables. Webster (2001) also stresses that CV is reserved for variables that have an absolute 0. An example is clay content. CV may be calculated for the sample dataset as the following:  
@@ -461,6 +461,7 @@ cv
 
 
 **Quantiles (a.k.a. Percentiles)**  
+
 The percentile is the value that cuts off the first nth percent of the data values when sorted in ascending order.
 
 The default for the `quantile()` function returns the  min, 25th percentile, 50th percentile (the median), 75th percentile, and max. These values are the "five number summary" originally proposed by Tukey. Other probabilities, however, can be used. At present, the 5th, 50th, and 95th percentiles are proposed for determining the range in characteristics (RIC) for a given soil property.
@@ -477,6 +478,7 @@ For the five number summary, 25% of the observations fall between each of the in
 
 
 **Range**  
+
 The range is the difference between the highest measurement of a group and the lowest. Using the sample data, the minimum and maximum values observed may be determined by the following:  
 
 ```{r}
@@ -519,7 +521,6 @@ Outliers are not necessarily in error, they are just extreme compared to the res
 ![R GUI image](figure/ch4_fig28.jpg)
 
 Figure 8.—Box plot description (Seltman, 2009).  
-
 
 A box plot of sand content by horizon may be made for the sample dataset as:  
 
@@ -655,40 +656,40 @@ Following is a brief example for interpolating pH using common software.
 3.  Format a column as numeric with ~15 decimals and a header named H_concentration.
 4.	Enter a formula in the first empty cell as: =(1/10^B2) * 1000000.
 5.	Drag the cell down to all empty records, which results in a transformed H+ concentration.
-![R GUI image](figure/ch4_fig45.jpg)
+    ![R GUI image](figure/ch4_fig45.jpg)
  
-The following is a workaround for ArcGIS, which truncates data that are extremely small (such as the H+ concentration for pH > 7).  
+    The following is a workaround for ArcGIS, which truncates data that are extremely small (such as the H+ concentration for pH > 7).  
 
-Bring the text file into ArcGIS as points using **Make XY Event Layer.**
+    Bring the text file into ArcGIS as points using **Make XY Event Layer.**
 
-![R GUI image](figure/ch4_fig46.jpg)  
+    ![R GUI image](figure/ch4_fig46.jpg)  
 
-![R GUI image](figure/ch4_fig47.jpg)  
+    ![R GUI image](figure/ch4_fig47.jpg)  
 
-Open the table for the Event layer:  
+    Open the table for the Event layer:  
 
-![R GUI image](figure/ch4_fig48.jpg)  
+    ![R GUI image](figure/ch4_fig48.jpg)  
 
 **II. Interpolate**
 
 1. Interpolate using the interpolation method of choice. Spline is used in this example.
 
-![R GUI image](figure/ch4_fig49.jpg)  
-![R GUI image](figure/ch4_fig50.jpg)  
+    ![R GUI image](figure/ch4_fig49.jpg)  
+    ![R GUI image](figure/ch4_fig50.jpg)  
 
-8. The resulting values correspond to H+ concentration * 10<sup>6</sup>  
+2. The resulting values correspond to H+ concentration * 10<sup>6</sup>.  
 
-![R GUI image](figure/ch4_fig51.jpg)  
+    ![R GUI image](figure/ch4_fig51.jpg)  
 
 **III. Back transform to log value**
 
-9. Convert values to pH using **Raster Calculator**  
+1. Convert values to pH using **Raster Calculator**.  
 
-![R GUI image](figure/ch4_fig52.jpg)  
+    ![R GUI image](figure/ch4_fig52.jpg)  
 
-10. The values now correspond to pH.
+2. The values now correspond to pH.
 
-![R GUI image](figure/ch4_fig53.jpg)  
+    ![R GUI image](figure/ch4_fig53.jpg)  
 
 
 ### <a id="circular")></a>4.6.2 Slope Aspect and Circular Data
@@ -712,13 +713,13 @@ The numeric output is fine, but a graphic is more revealing. The following shows
 rose.diag(aspect, bins = 8, col="grey")
 ```
 
-Figure 11.—Rose diagram.  
+Figure 11.—A rose diagram.  
 
 ## <a id="rmd")></a>4.7 R Markdown Reports (.Rmd)
 
-R Markdown (.Rmd) is a document format that makes it easy to create reports and other dynamic documents. It allows R code to be mingled with text and executed like an R script. This allows R to generate reports similarly to NASIS. 
+R Markdown (RMD) is a document format that makes it easy to create reports and other dynamic documents. It allows R code to be mingled with text and executed like an R script. This allows R to generate reports similarly to NASIS. 
 
-Several reports have been developed to generate summaries of pedon and GIS data. Examples can be found at: [https://github.com/ncss-tech/soil-pit/tree/master/examples](https://github.com/ncss-tech/soil-pit/tree/master/examples). Some of the examples show customized reports developed to generate zonal statistics of map units. Instructions can be found at the Soil Survey Region 11 [SharePoint site](https://ems-team.usda.gov/sites/NRCS_SSRA/mo-11/Soils%20%20GIS/Forms/AllItems.aspx?RootFolder=%2Fsites%2FNRCS%5FSSRA%2Fmo%2D11%2FSoils%20%20GIS%2Fguides%2FR&FolderCTID=0x0120007929E36D8FF15644B2C3F1488664C3CD&View=%7BFE55388F%2DFD5F%2D4A7B%2D98BD%2DA1F618066492%7D). Following is a demonstration of how to run an existing .Rmd to summarize a series of pedons for a given soil series. *Editor's note: The SharePoint site is only available to NRCS employees.*
+Several reports have been developed to generate summaries of pedon and GIS data. Examples can be found at: [https://github.com/ncss-tech/soil-pit/tree/master/examples](https://github.com/ncss-tech/soil-pit/tree/master/examples). Some of the examples show customized reports developed to generate zonal statistics of map units. Instructions can be found at the Soil Survey Region 11 [SharePoint site](https://ems-team.usda.gov/sites/NRCS_SSRA/mo-11/Soils%20%20GIS/Forms/AllItems.aspx?RootFolder=%2Fsites%2FNRCS%5FSSRA%2Fmo%2D11%2FSoils%20%20GIS%2Fguides%2FR&FolderCTID=0x0120007929E36D8FF15644B2C3F1488664C3CD&View=%7BFE55388F%2DFD5F%2D4A7B%2D98BD%2DA1F618066492%7D). Following is a demonstration of how to run an existing RMD file to summarize a series of pedons for a given soil series. *Editor's note: Does it matter that the SharePoint site is only available to NRCS employees?*
 
 **Objectives**
 
@@ -731,14 +732,14 @@ Several reports have been developed to generate summaries of pedon and GIS data.
 -	Data must be properly populated; otherwise, the report may fail. Common examples of improper population include:
     -	Horizon depths don't lineup.
     -	The Pedon and Site tables aren't both loaded.
--	You must be familiar with RStudio. If not, see the Job-Aids webpage for an introduction.
--	An ODBC connection to NASIS must be setup. If not, see the Job-Aids webpage for instructions.
--	You must have assigned generalized horizon labels (GHL) to the "Comp_Layer_ID" column within the pedon horizon table within NASIS, or setup a GHL using pattern matching. For an introduction to pattern matching see the Job-Aid: [Assigning Generalized Horizon Labels.](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/gen-hz-assignment.html?root=aqp)
+-	You must be familiar with RStudio. If not, see the Job Aids webpage for an introduction.
+-	An ODBC connection to NASIS must be setup. If not, see the Job Aids webpage for instructions.
+-	You must have either assigned generalized horizon labels (GHL) to the "Comp_Layer_ID" column within the pedon horizon table within NASIS or setup a GHL using pattern matching. For an introduction to pattern matching, see the Job Aid: [Assigning Generalized Horizon Labels.](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/gen-hz-assignment.html?root=aqp)
 
 **Instructions**
 
-1. Load NASIS selected set. Run a query, such as "POINT - Pedon/Site/NCSSlabdata by upedonid and Taxon Name" to load your selected set. Be sure to target both the pedon and site tables. Remove from your selected set the pedons and sites you wish to exclude from the report.
-2.	Open RStudio  and the run setup file. Copy the box below and paste it into the R console. 
+1. Load your NASIS selected set. Run a query, such as "POINT - Pedon/Site/NCSSlabdata by upedonid and Taxon Name" to load your selected set. Be sure to target both the pedon and site tables. Remove from your selected set any pedons and sites you wish to exclude from the report.
+2.	Open RStudio and run the setup file. Copy the box below and paste it into the R console. 
 
 ```{r, eval=FALSE}
 # Download .Rprofile and setup
@@ -748,23 +749,23 @@ download.file("https://raw.githubusercontent.com/ncss-tech/soil-pit/master/sandb
 source("C:/workspace/soil-pit/r_setup.R")
 ```
 
-The setup only needs to be run once. Afterwards, you only need to update your R packages intermittently. You can update R by clicking the **Update** button on the **Packages** tab in the lower right window. The first time can be lengthy. 
+    The setup only needs to be run once. Afterwards, you only need to update your R packages intermittently. You can update R by clicking the **Update** button on the **Packages** tab in the lower right window. The first time can be lengthy. 
 
 3. Open the pedon report. Navigate to the file path specified above and open pedon_summary_by_taxonname.Rmd or lab_summary_by_taxonname.Rmd in Rstudio.
  
 4. Check or create a genhz_rules file for your soil series. In order to aggregate the pedons by horizon designation, a genhz_rules file (e.g., Genesee_rules.R) is needed. See below.
 
-![](figure/ghl_folder.png)
+    ![](figure/ghl_folder.png)
 
-If Genesee_rules.R does not exist, see the following job aid on how to create one: [Assigning Generalized Horizon Labels](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/gen-hz-assignment.html?root=aqp).
+    If Genesee_rules.R does not exist, see the following job aid on how to create one: [Assigning Generalized Horizon Labels](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/gen-hz-assignment.html?root=aqp).
 
-![](figure/ghl_rules.png)
+    ![](figure/ghl_rules.png)
 
-Pay special attention to how caret "^" and dollar "\$" symbols are used. They function as anti-wildcards. For example, a "^" placed before an A horizon (^A) matches any horizon designation that follows A, such as Ap and Ap1. Placing a "\$" after a Bt horizon (Bt\$) matches any horizon designation that precedes Bt, such as 2Bt and 3Bt. Encapsulating a horizon with both "^" and "\$" symbols will result only in exact matches. For example, ^A$ only matches A, not Ap or A1. *Editor's note: Is the back slash before the dollar sign correct?  If so, should it be in the last sentence also?*
+    Pay special attention to how caret "^" and dollar "\$" symbols are used. They function as anti-wildcards. For example, placing "^" before an A horizon (^A) matches any horizon designation that follows A, such as Ap and Ap1. Placing "\$" after a Bt horizon (Bt\$) matches any horizon designation that precedes Bt, such as 2Bt and 3Bt. Encapsulating a horizon with both "^" and "\$" symbols results in only exact matches. For example, ^A$ only matches A, not Ap or A1. *Editor's note: Is the back slash before the dollar sign correct?  If so, should it be in the last sentence also?*
 
-5.	Enter or replace the soil series of interest, and click the **Knit** button. Be sure to encase the name of the soil series in quotations, using either double or single quotation marks, e.g., `"series"` or `'series'`.
+5.	Enter or replace the soil series of interest, and click the **Knit HTML** button. Be sure to encase the name of the soil series in quotations, using either double or single quotation marks, e.g., `"series"` or `'series'`.
 
-![](figure/genesee.png)
+    ![](figure/genesee.png)
 
 6.	Save the report. The report is automatically saved upon creation in the same folder as the R report. However, it is always given the same generic name as the R report (i.e., C:/workspace/soil-pit/reports/pedon_summary_by_taxonname.html), and it will therefore be overwritten the next time the report is run. If you wish to save the report, rename the HTML file or convert it to PDF. Also when reopening the HTML file with Internet Explorer, click **Allow blocked content** if prompted. Otherwise, Internet Explorer may alter the formatting within the document.
 
