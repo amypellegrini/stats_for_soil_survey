@@ -60,7 +60,7 @@ Tukey (1980) summarized:
 
 "No catalog of techniques can convey a willingness to look for what can be seen, whether or not anticipated. Yet this is at the heart of exploratory data analysis. The graph paper and transparencies are there, not as a technique, but rather as a recognition that the picture examining eye is the best finder we have of the wholly unanticipated."
 
-Fortunately, we can dispense with the graph paper and transparencies and use software that makes routine work of developing the "pictures" (i.e., graphical output) and descriptive statistics needed to explore our data.  
+Fortunately, you can dispense with the graph paper and transparencies and use software that makes routine work of developing the "pictures" (i.e., graphical output) and descriptive statistics needed to explore your data.  
 
 Descriptive statistics include:  
 
@@ -133,7 +133,7 @@ sub <- subset(h, select = c("genhz", "clay", "total_frags_pct", "phfield", "effe
 summary(sub)
 ```
 
-The `summary()` function is a generic R function. It returns a preprogrammed summary for any R object. Because `h` is a data frame, you get a summary of each column. Factors are summarized by their frequency (i.e., number of observations); numeric or integer variables print out a five-number summary; and characters simply print their length. The number of missing observations for any variable is also printed. If any of these metrics look unfamiliar, don't worry. They are described shortly.
+The `summary()` function is a generic R function. It returns a preprogrammed summary for any R object. Because `h` is a data frame, you get a summary of each column. Factors are summarized by their frequency (i.e., number of observations); numeric or integer variables print out a five-number summary; and characters simply print their length. The number of missing observations for any variable is also printed. If any of these metrics look unfamiliar, don't worry; they are described shortly.
 
 When you have missing data and the function you want will not run with missing values, the following options are available:  
 
@@ -170,7 +170,7 @@ Typos are common in the old pedon data in NASIS.
 ### <a id="ex1")></a>4.1.1 Exercise: Fetch and Inspect
 
 - Load the gopheridge dataset from the soilDB package or use your own data (highly encouraged). Inspect the dataset. 
-- Apply the generalized horizon rules below or develop your own. See the following [job-aid](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/gen-hz-assignment.html?root=aqp).
+- Apply the generalized horizon rules below or develop your own. See the following [job aid](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/gen-hz-assignment.html?root=aqp).
 - Summarize the depths, genhz, texture class, sand, and fine gravel.
 - Show your work and submit the results to your coach.
 
@@ -186,7 +186,9 @@ Now that you've checked for missing values and typos and made corrections, you c
 
 ### <a id="norm")></a>4.2.1 The Normal Distribution
 
-What is a normal distribution, and why should you care? Many statistical methods are based on the properties of a normal distribution. However, applying certain methods to data that are not normally distributed can give misleading or incorrect results. Most methods that assume normality are robust enough for all data except the very abnormal. This section is not meant to be a recipe for decision making. It is intended to extend the tools available to examine your data. For the parameters most commonly seen by pedologists, the impact of normality is most commonly seen when documenting the ranges of a variable (i.e., low, RV, and high). Commonly, a rule-of thumb, such as "two standard deviations," is used to define the low and high values of a variable. This is fine if the data are normally distributed. If the data are skewed, however, using the standard deviation as a parameter does not provide useful information about the data distribution. The quantitative measures of kurtosis (peakedness) and skewness (symmetry) can be used to assist in accessing normality. Functions for these measures are in the fBasics package, but Webster (2001) cautions against using significance tests for assessing normality. The preceding sections and chapters demonstrate methods to cope with alternative distributions. *Editor's note: Is "preceding" the correct term?*
+What is a normal distribution, and why should you care? Many statistical methods are based on the properties of a normal distribution. However, applying certain methods to data that are not normally distributed can give misleading or incorrect results. Most methods that assume normality are robust enough for all data except the very abnormal. This section is not meant to be a recipe for decision making. It is intended to extend the tools available to examine your data. 
+
+For the parameters most commonly seen by pedologists, the impact of normality is most commonly seen when documenting the ranges of a variable (i.e., low, RV, and high). Commonly, a rule-of thumb, such as "two standard deviations," is used to define the low and high values of a variable. This is fine if the data are normally distributed. If the data are skewed, however, using the standard deviation as a parameter does not provide useful information about the data distribution. The quantitative measures of kurtosis (peakedness) and skewness (symmetry) can be used to assist in accessing normality. Functions for these measures are in the fBasics package, but Webster (2001) cautions against using significance tests for assessing normality. The preceding sections and chapters demonstrate methods to cope with alternative distributions. *Editor's note: Is "preceding" the correct term?*
 
 A Gaussian distribution is often referred to as the "Bell Curve" and has the following properties (Lane, 2016).  
 
@@ -218,7 +220,7 @@ select <- q[1] <= d$x & d$x <= q[2]
 polygon(x = c(q[1], d$x[select], q[2]), y = c(0, d$y[select], 0), col='grey')
 abline(v = quantile(r, p = 0.5), lty = 2)
 ```
-Figure 1.— *Editor's note: Please add a caption. Because this chapter uses captions, all of the figures should have a caption. Note also that many of the figures do not appear in the RMD file. I don't know if the lack of imagery in the RMD file matters other than making it difficult to predict what the HTML file will look like.*
+Figure 1.— *Editor's note: Please add a caption. Because this chapter uses some captions, all of the figures should have a caption. Note also that many of the figures do not appear in the RMD file. I don't know if the lack of imagery in the RMD file matters other than making it difficult to predict what the HTML file will look like.*
 
 A histogram or density plot provides a quick visual reference for determining normality as discussed in section 4.1. Distributions are typically normal, bimodal, or skewed.  
 
@@ -328,7 +330,7 @@ qqline(h$total_frags_pct)
 
 Figures 6a and 6b.—QQplots.  
 
-The line in figures 6a and 6b represents the quantiles of a normal distribution. If the data set is perfectly normal, the data points fall along the line. Overall, this plot shows the clay in the example to be more or less normally distributed. However, the second plot again shows that the rock fragments are far from normally distributed.
+The line in figures 6a and 6b represents the quantiles of a normal distribution. If the data set is perfectly normal, the data points fall along the line. Overall, this plot shows the clay in the example to be more-or-less normally distributed. However, the second plot again shows that the rock fragments are far from normally distributed.
 
 A more detailed explanation of QQplots may be found on Wikipedia:  
 [https://en.wikipedia.org/wiki/QQ_plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot). *Editor's note: In general, Wikipedia is not considered a scholarly reference and is not cited. By listing it here, you imply approval of whatever version is online whenever the reader checks. (Let the readers Google QQplots on their own.) I highly recommend you remove these lines. At the very least, add the date you accessed the site.*  
@@ -336,7 +338,7 @@ A more detailed explanation of QQplots may be found on Wikipedia:
 
 ## <a id="cent")></a>4.3 Measures of Central Tendency  
 
-Measures of central tendency determine the midpoint of the range of observed values. In NASIS, the midpoint should ideally be equivalent to the representative value (RV) for numeric and integer data. The mean and median are the most commonly used measures for our purposes.
+Measures of central tendency determine the midpoint of the range of observed values. In NASIS, the midpoint should ideally be equivalent to the representative value (RV) for numeric and integer data. The mean and median are the most commonly used measures for soil purposes.
 
 **Mean**
 
@@ -380,7 +382,7 @@ aggregate(clay ~ genhz, data = h, median)
 aggregate(clay ~ genhz, data = h, summary)
 ```
 
-In this example, the mean and median are only slightly different, so we can safely assume that we have a normal distribution. However, many soil variables commonly have a non-normal distribution. For example, let's look at graphical examination of the mean versus median for clay and rock fragments.  
+In this example, the mean and median are only slightly different, so you can safely assume that you have a normal distribution. However, many soil variables commonly have a non-normal distribution. For an example, look at the following graphical examination of the mean versus median for clay and rock fragments.  
 
 ```{r}
 test <- density(clay)
@@ -666,7 +668,7 @@ Following is a brief example for interpolating pH using common software.
 
     ![R GUI image](figure/ch4_fig47.jpg)  
 
-    Open the table for the Event layer:  
+    Open the table for the Event layer.  
 
     ![R GUI image](figure/ch4_fig48.jpg)  
 
@@ -763,7 +765,7 @@ Several reports have been developed to generate summaries of pedon and GIS data.
 
     Pay special attention to how caret "^" and dollar "\$" symbols are used. They function as anti-wildcards. For example, placing "^" before an A horizon (^A) matches any horizon designation that follows A, such as Ap and Ap1. Placing "\$" after a Bt horizon (Bt\$) matches any horizon designation that precedes Bt, such as 2Bt and 3Bt. Encapsulating a horizon with both "^" and "\$" symbols results in only exact matches. For example, ^A$ only matches A, not Ap or A1. *Editor's note: Is the back slash before the dollar sign correct?  If so, should it be in the last sentence also?*
 
-5.	Enter or replace the soil series of interest, and click the **Knit HTML** button. Be sure to encase the name of the soil series in quotations, using either double or single quotation marks, e.g., `"series"` or `'series'`.
+5.	Enter or replace the soil series of interest, and click the **Knit HTML** button. Be sure to encase the name of the soil series in quotations. You can use either double or single quotation marks, e.g., `"series"` or `'series'`.
 
     ![](figure/genesee.png)
 
@@ -785,7 +787,9 @@ Several reports have been developed to generate summaries of pedon and GIS data.
 
 ## <a id="zonal")></a>4.8 Zonal Statistics
 
-To summarize spatial data for a polygon, some form of zonal statistics can be used. "Zonal statistics" is a generic term for statistics that aggregate data for an area or zone (e.g., a set of map unit polygons). Two methods are available. The most common method, which is provided by most GIS, is the census-survey method. This method computes a statistical summary of all the raster cells that overlap a polygon or map unit. This approach is generally faster and provides a complete summary of the spatial data. An alternative approach is the sample-survey method, which takes a collection of random samples from each polygon or map unit. Although the sample approach is generally slower and does not sample every cell that overlaps a polygon, it does offer certain advantages. For example, the census approach typically only provides basic statistics, such as minimum, maximum, mean, standard deviation, and sum. For skewed data sets, however, the mean and standard deviation may be unreliable. A better alternative for skewed data sets is to use nonparametric statistics, such as quantiles. Examples of nonparametric statistics are covered in Chapter 4. The advantage of the sample-survey approach is that it allows you to utilize alternative statistics, such as quantiles, to perform a more thorough exploratory analysis. Some people prefer the census approach because it provides a complete summary of all the data that overlaps a map unit. It is important, however, to remember that all spatial data are only approximations of the physical world and therefore are only estimates with varying levels of precision. *Editor's note: This paragraph states "Examples of nonparametric statistics are covered in Chapter 4." This is Chapter 4. If this is a correct statement, please clarify if you mean all sections of this chapter or specific sections.*
+To summarize spatial data for a polygon, some form of zonal statistics can be used. "Zonal statistics" is a generic term for statistics that aggregate data for an area or zone (e.g., a set of map unit polygons). Two methods are available: census-survey and sample-survey. 
+
+The most common method, which is provided by most GIS, is the census-survey method. This method computes a statistical summary of all the raster cells that overlap a polygon or map unit. This approach is generally faster and provides a complete summary of the spatial data. An alternative approach is the sample-survey method, which takes a collection of random samples from each polygon or map unit. Although the sample approach is generally slower and does not sample every cell that overlaps a polygon, it does offer certain advantages. For example, the census approach typically only provides basic statistics, such as minimum, maximum, mean, standard deviation, and sum. For skewed data sets, however, the mean and standard deviation may be unreliable. A better alternative for skewed data sets is to use nonparametric statistics, such as quantiles. Examples of nonparametric statistics are covered in Chapter 4. The advantage of the sample-survey approach is that it allows you to utilize alternative statistics, such as quantiles, to perform a more thorough exploratory analysis. Some people prefer the census approach because it provides a complete summary of all the data that overlaps a map unit. It is important, however, to remember that all spatial data are only approximations of the physical world and therefore are only estimates with varying levels of precision. *Editor's note: This paragraph states "Examples of nonparametric statistics are covered in Chapter 4." This is Chapter 4. If this is a correct statement, please clarify if you mean all sections of this chapter or specific sections.*
 
 Before you extract spatial data for spatial predictions, the data must meet the following conditions:  
 
@@ -875,11 +879,9 @@ Compare the results of the census and sample approaches above. While the census 
 
 ### <a id="teui")></a>4.8.2 TEUI Toolkit
 
-The TEUI toolkit works similarly to *Zonal Statistics as Table* within ArcGIS but has the added benefit of interactive graphics to aid in the assessment. TEUI is an ArcGIS add-in and can be installed without administrator privileges. Additional information and downloads are available at:  
+The TEUI toolkit works similarly to *Zonal Statistics as Table* within ArcGIS but has the added benefit of interactive graphics to aid in the assessment. TEUI is an ArcGIS add-in and can be installed without administrator privileges. Additional information and downloads are available at: [http://www.fs.fed.us/eng/rsac/programs/teui/downloads.html](http://www.fs.fed.us/eng/rsac/programs/teui/downloads.html).  
 
-[http://www.fs.fed.us/eng/rsac/programs/teui/downloads.html](http://www.fs.fed.us/eng/rsac/programs/teui/downloads.html).  
-
-One advantage of TEUI is its ability to output tabular data at both the map unit and polygon level with one operation. Sections 2 through 4 and section 7 of the TEUI User Guide are excerpted below (Vaughan and Megown, 2015). The remainder of part 4.8.2 of this chapter is dominantly copied from "The Terrestrial Ecological Unit Inventory (TEUI) Geospatial Toolkit User Guide v5.2."  Minor changes were made to reflect the context of this course. 
+One advantage of TEUI is its ability to output tabular data at both the map unit and polygon level with one operation. Sections 2, 3, 4, and 7 of the TEUI User Guide are excerpted below (Vaughan and Megown, 2015). The remainder of part 4.8.2 of this chapter is dominantly copied from "The Terrestrial Ecological Unit Inventory (TEUI) Geospatial Toolkit User Guide v5.2."  Minor changes were made to reflect the context of this course. 
 
 **SECTION 2. Creating and opening an existing project**
 
@@ -976,9 +978,9 @@ In some instances, such as TEUI mapping or Soil Survey, you may wish to identify
 
 **Add Raster Data to the ArcMap Table of Contents**  
 
-1.  To add raster data to your ArcMap Table of Contents, first select the layer or layers you wish to add by clicking on them in the grey layer list under the **Rasters** section.    
+1.  To add raster data to your ArcMap Table of Contents, first select the layer or layers you wish to add by clicking on them in the grey layer list under the **Rasters** section.  
 
-![R GUI image](figure/ch5_fig24.jpg)
+    ![R GUI image](figure/ch5_fig24.jpg)  
 
 2.  Click the **Add to Table of Contents** button.  
 
