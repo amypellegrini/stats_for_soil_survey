@@ -1025,7 +1025,7 @@ A primary Toolkit feature is the ability to view the generated statistics in bot
  
     ![R GUI image](figure/ch5_fig31.jpg)  
 
- 5.  Examine the options in the **Data View Type** drop-down menu. 
+ 5.  Examine the options in the **Data View Type** drop-down menu.  
  
     *MUP\MU Comparison:* This is the default option. This allows the greatest flexibility when comparing individual polygons against other individual polygons, individual polygons against map units, or map units against map units (if chosen).  
  
@@ -1056,7 +1056,7 @@ A primary Toolkit feature is the ability to view the generated statistics in bot
 
 7.  In the **Feature Source** drop-down menu, choose which feature analysis layer you would like to graph (polygons or discrete raster).  
 
-![R GUI image](figure/ch5_fig38.jpg)  
+    ![R GUI image](figure/ch5_fig38.jpg)  
 
 8.  In the **Map Unit** drop-down menu, choose the map unit from which you would like to select a polygon. Alternatively, select just
 the map unit you want to graph as a whole (i.e., don’t select an individual feature below). Also, you can leave this option blank (which is the default).  
@@ -1077,13 +1077,13 @@ the map unit you want to graph as a whole (i.e., don’t select an individual fe
 
 12. When you are finished, click **Set Graph.**  
 
-![R GUI image](figure/ch5_fig42.jpg)  
+    ![R GUI image](figure/ch5_fig42.jpg)  
 
 **Common tasks with graphs**
 
 **How do I add more individual features or map units to same graph?**
 
-Within the **Add Series** pane, select a new feature source (if desired), map unit, feature, or raster source. Click **Set Graph** and the new feature or map unit will be added to the graph and the legend in a new color.  
+Within the **Add Series** pane, select a new feature source (if desired), map unit, feature, or raster source. Click **Set Graph,** and the new feature or map unit will be added to the graph and the legend in a new color.  
 
 ![R GUI image](figure/ch5_fig43.jpg)  
 
@@ -1156,7 +1156,7 @@ The following table is produced:
 
 ![R GUI image](figure/ch5_fig3.jpg)  
 
-The use of the mean and standard deviation are acceptable, provided the distributions are close to normal and the interest is in summarizing the entire population of map units. To get a closer look at individual polygons, summarize by selecting **FID** in the **Zone Field.**  
+The use of the mean and standard deviation are acceptable, provided the distributions are close to normal and you are interested in summarizing the entire population of map units. To get a closer look at individual polygons, summarize by selecting **FID** in the **Zone Field.**  
 
 ![R GUI image](figure/ch5_fig4.jpg)  
 
@@ -1191,7 +1191,7 @@ FAO Corporate Document Repository.
 
 Filliben, J.J. 2004. NIST/SEMATECH e-Handbook of statistical methods. [http://www.itl.nist.gov/div898/handbook/index.htm](http://www.itl.nist.gov/div898/handbook/index.htm).    
 
-Lane, D.M. Accessed 2016. Online statistics education: A multimedia course of study. [(http://onlinestatbook.com/)](http://onlinestatbook.com/) Project leader: [David M. Lane](http://www.ruf.rice.edu/~lane/), Rice University.
+Lane, D.M. Accessed 2016. Online statistics education: A multimedia course of study. Project leader: [David M. Lane](http://www.ruf.rice.edu/~lane/), Rice University. [http://onlinestatbook.com/](http://onlinestatbook.com/).
 
 Seltman, H. 2009. Experimental design and analysis. Chapter 4: Exploratory data analysis. Carnegie Mellon University.  [http://www.stat.cmu.edu/~hseltman/309/Book/](http://www.stat.cmu.edu/~hseltman/309/Book/).
 
