@@ -92,7 +92,7 @@ install.packages("sharpshootR", repos="http://R-Forge.R-project.org", type="sour
 ```
 <hr><br>  
 *Editor's note: The style-sheet based formatting in this chapter may lead to conflicts between the editing and the desired html output.  I have no way to determine how the RMD formatting will regenerate in HTML. Please review carefully. Similarly, I am uncertain how to use the BIB file to generate references that match the citation style of the Soil Science Division.*
-#5.0 Introduction
+##5.0 Introduction
 
 Nearly every aspect of soil survey involves the question: "Is X more similar to Y or to Z?" The quantification of similarity within a collection of horizons, pedons, components, map units, or even landscapes represents an exciting new way to enhance the precision and accuracy of the day-to-day work of soil scientists. After completing this module, you should be able to quantitatively organize objects based on measured or observed characteristics in a consistent and repeatable manner. Perhaps you will find a solution to the long-standing "similar or dissimilar" question.
 
@@ -111,11 +111,11 @@ Nearly every aspect of soil survey involves the question: "Is X more similar to 
 * Apply techniques from numerical taxonomy to addressing the "similar or dissimilar" question.
 * Learn some strategies for coping with missing data.
 
-#5.1 Whirlwind Tour
+##5.1 Whirlwind Tour
 
 Most of the examples featured in this whirlwind tour are based on soil data from [McGahan, D.G., Southard, R.J, Claassen, V.P. 2009. Plant-available calcium varies widely in soils on serpentinite landscapes. Soil Sci. Soc. Am. J. 73: 2087-2095.](https://dl.sciencesocieties.org/publications/sssaj/articles/73/6/2087) These data are available in the dataset "sp4" that is built into `aqp`.
 
-##5.1.1 Similarity, Disimilarty, and Distance
+###5.1.1 Similarity, Disimilarty, and Distance
 
 There are shelves of books and thousands of academic articles describing the theory and applications of "clustering" and "ordination" methods. This body of knowledge is commonly described as the field of "numerical taxonomy" [@Sneath1973]. Central to this field is the quantification of "similarity" among "individuals" based on a relevant set of "characteristics." Individuals are typically described as rows of data with a single characteristic per column, together referred to as a "data matrix." For example:
 
@@ -159,7 +159,7 @@ Note that this is the full form of the [distance matrix.](https://en.wikipedia.o
 Interpretation of the matrix is simple: Individual "A" is more like "ABt" than like "Bt1." It is important to note that quantification of dissimilarity (distance) among individuals is always relative: "X is more like Y, as compared to Z."
 
 
-##5.1.2 Standardization of Characteristics
+###5.1.2 Standardization of Characteristics
 
 Euclidean distance doesn't make much sense if the characteristics do not share a common unit of measure or range of values. Nor is it relevant when some characteristics are categorical and some are continuous. For example, distances are distorted if you compare clay (%) and exchangeable Ca (cmol/kg).
 
@@ -201,7 +201,7 @@ round(m, 2)
 
 You can now begin to describe dissimilarity between individuals using an arbitrary number of (relevant) characteristics. You can make statements like "The A horizon is roughly 2x more similar to the ABt horizon than it is to the Bt horizon." Although this is a trivial example, the utility of generalizing these methods to soil survey operations should be obvious.
 
-###5.1.2.1 Review and Discuss
+####5.1.2.1 Review and Discuss
 
  * What are the "data matrix" and "distance matrix"?
  * What is standardization, and why is it important?
@@ -212,7 +212,7 @@ You can now begin to describe dissimilarity between individuals using an arbitra
      + Multiple dimensions are simple to define in code but are hard to visualize.
    
 
-##5.1.3 Quick Detour: Missing Data
+###5.1.3 Quick Detour: Missing Data
 
 Missing data are a fact of life. Soil scientists are quite familiar with missing lab data (*"Why didn't we request optical grain counts?"*) or missing essential NASIS pedon data elements, such as horizon bottom depth, estimated clay fraction, or pH. Nearly all of the methods described in this document are very sensitive to missing data. In other words, they won't work! Following are a couple of possible solutions:
 
@@ -221,7 +221,7 @@ Missing data are a fact of life. Soil scientists are quite familiar with missing
  * Remove records containing any missing data.
 
 
-##5.1.4 Visualizing Pair-Wise Distances: The Dendrogram
+###5.1.4 Visualizing Pair-Wise Distances: The Dendrogram
 
 [Dendrograms](http://en.wikipedia.org/wiki/Dendrogram) are a convenient way of visualizing [pair-wise distances](http://hymenoptera.tamu.edu/courses/ento601/pdf/Sokal_1966.pdf) among individuals from a distance matrix. Dissimilarity between branches is proportional to the level at which branches merge: branching at higher levels (relative to the root of the tree) suggests greater dissimilarity; branching at lower levels suggests greater similarity. Consider the previous example in which distance between individuals was defined in terms of sand and clay percentages. *Editor's note: Citing or linking to Wikipedia has been considered questionable scholarship. The Wiki pages are subject rapid change. The dendrogram page, for example, was modified between the date this chapter was written and the date I'm editing it. The decision to cite or link is ultimately yours, but I recommend against it. Please consider an alternate link, such as https://www.google.com/#q=dendrogram.  Such a link makes it the reader's responsibility to judge the quality of the current information.*
 
@@ -264,12 +264,12 @@ mtext('Dendrogram Representation of Distance Matrix\n(all characteristics, stand
 There isn't much difference between these two figures because most of the characteristics in the example dataset are highly correlated with soil texture. There are some more important details on how individuals are connected into larger and larger groups within the dendrogram.
 
 
-###5.1.4.1 Review and Discuss
+####5.1.4.1 Review and Discuss
  * Do you have any questions about dendrogram interpretation?  Dendrograms are used extensively in the rest of this chapter.
  * If you were explaining how to interpret a dendrogram to someone, would you start at the roots or leaves? Why?
 
 
-##5.1.5 Cluster Analysis: Finding Groups in Data
+###5.1.5 Cluster Analysis: Finding Groups in Data
 [**Cluster analysis**](https://en.wikipedia.org/wiki/Cluster_analysis) is a massive topic that deals with the seemingly simple task of finding useful groups within a dataset. This topic and the methods used are also referred to as "unsupervised classification" in the fields of remote sensing and GIS. All of the available algorithms will find groups in a give dataset; however, it is up to the subject expert to determine the following:
  
  1. Suitable characteristics and standardization method,
@@ -278,10 +278,10 @@ There isn't much difference between these two figures because most of the charac
  4. Interpretation of the final grouping based on subject knowledge, and
  5. The possiblity of needing to start over at step 1.
 
-###5.1.5.1 Using Color to Communicate Results of Clustering or Ordination
+####5.1.5.1 Using Color to Communicate Results of Clustering or Ordination
 Note that the widespread use of color in the following examples is not for aesthetic purposes. Colors are convenient for tri-variate data-spaces because you can visually integrate the information into a self-consistent set of classes.
 
-###5.1.5.2 Hierarchical Clustering
+####5.1.5.2 Hierarchical Clustering
 [Hierarchical clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering) is useful when a full distance matrix is available and the optimal number of clusters is not yet known. This form of clustering creates a data structure that can encode "grouping" information from one cluster to as many clusters as there are individuals. The expert must determine the optimal place to "cut the tree" and generate a fixed set of clusters. The results from a hierarchical clustering operation are nearly always presented as a dendrogram.
 
 ```{r, echo=FALSE, results='hide', fig.width=10, fig.height=4}
@@ -314,7 +314,7 @@ tiplabels(pch=15, col=cols)
 # mtext('Dendrogram Representation of Distance Matrix\n(all characteristics, standardized)', side=1, line=1)
 ```
 
-####5.1.5.2.1 Methods
+#####5.1.5.2.1 Methods
 
 There are two main types of hierarchical clustering.
 
@@ -331,13 +331,13 @@ The agglomerative methods also depends on the choice of [linkage criterion](http
  * Weighted average linkage, and
  * Flexible linkage.  
 
-#####5.1.5.2.1.1 Review and Discuss
+######5.1.5.2.1.1 Review and Discuss
  * The simplicity and lack of decisions make the divisive method convenient for most work. 
  * The top-down approach is similar to the way in which we describe soil morphology and taxonomy.
  * When selecting a method, think about it; don't just go "fishing."
 
 
-###5.1.5.3 Centroid and Medoid (Partitioning) Clustering
+####5.1.5.3 Centroid and Medoid (Partitioning) Clustering
 Centroid and medoid cluster analyses are commonly referred to as [k-means](https://en.wikipedia.org/wiki/K-means_clustering)-style analysis. "K-means," however, is just one of many possible clustering algorithms that partition property-space into a fixed number of groups. These type of algorithms can be applied to very large datasets because they do not rely on the distance matrix. Instead, they are based on an iterative shuffling of group "centroids" until some criterion is minimized, for example, the mean variance within groups.  
 
 ```{r, echo=FALSE, results='hide', fig.width=6, fig.height=6}
@@ -375,7 +375,7 @@ points(sp4.scaled$Mg, sp4.scaled$Ca, bg=cols, col='black', cex=1.25, pch=21)
 legend('topright', legend=c('Observation', 'Medoid', 'Centroid'), pch=c(21, 0, 8), lwd=c(1, 2, 1), pt.cex=c(1.25, 3, 2), lty=NA, bty='n', cex=1.25)
 ```
 
-####5.1.5.3.1 Methods
+#####5.1.5.3.1 Methods
 
 This section describes three (out of many) of the most important partitioning-type algorithms.
 
@@ -385,18 +385,18 @@ This section describes three (out of many) of the most important partitioning-ty
 
 All of these methods are sensitive to the type of standardization applied to the characteristics. These methods rely on iterative minimization of one or more criteria; therefore, each clustering "run" may generate slightly different output. Most implementations re-run the algorithm until it stabilizes.
 
-#####5.1.5.3.1.1 Review and Discuss
+######5.1.5.3.1.1 Review and Discuss
 
  * What is the difference between a "medoid" and a "centroid"? Can you think of a way in which both concepts could be applied to the grouping of soils data? 
  * Fuzzy clustering is also referred to as "soft clustering," while the other two methods are referred to as "hard clustering." Sometimes, using both can be helpful, especially if individuals straddle the line between groups.
 
-##5.1.6 Ordination: Visualization in a Reduced Space
+###5.1.6 Ordination: Visualization in a Reduced Space
 Humans are generally quite good at extracting spatial patterns, almost instantly, from two dimensional fields: faces, written language, etc. Sadly, this ability does not extend beyond two or three dimensions. The term [ordination](https://en.wikipedia.org/wiki/Ordination_(statistics)) refers to a suite of methods that project coordinates in a high-dimensional space into suitable coordinates in a low-dimensional (reduced) space. Map projections are a simple form of ordination: coordinates from the curved surface of the Earth are projected to a two-dimensional plane. As with any projection, there are assumptions, limitations, and distortions.
 
 [Principal component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) is one of the simplest and most widely used ordination methods. The reduced space ("principal components") are defined by linear combinations of characteristics. The rest of this chapter is focused on [multidimensional scaling](https://en.wikipedia.org/wiki/Multidimensional_scaling) (MDS). Methods of ordination that use ["Non-metric" multidimensional scaling](https://en.wikipedia.org/wiki/Multidimensional_scaling#Non-metric_multidimensional_scaling) (nMDS) attempt to generate a reduced space that minimizes distortion in proportional similarity; i.e., similar individuals are near each other in the reduced space, dissimilar individuals are farther apart.
 
 
-###5.1.6.1 An Example of nMDS Applied to Soil Data
+####5.1.6.1 An Example of nMDS Applied to Soil Data
 The following example is based on a data matrix containing lab measurements of clay fraction, sand fraction, exchangeable Ca, exchangeable Mg, and CEC measured by NH<sub>4</sub>-Ac at pH 7.
 
 |name |  clay|  sand|    Mg|    Ca| CEC_7|
@@ -455,14 +455,14 @@ plot(sp4, color='cl', cex.names=0.75)
 title('Clustering Results in Context', line=-3)
 ```
 
-##5.1.7 Review and Discuss
+###5.1.7 Review and Discuss
 
 * Which visualization of the distance matrix was simpler to interpret: Dendrogram or ordination by nMDS?
 * Do you have any questions about the figures?
 * Do you have any guesses on what the clusters represent?
 
 
-##5.1.8 Pair-Wise Distances Between Soil Profiles  
+###5.1.8 Pair-Wise Distances Between Soil Profiles  
 
 ```{r, fig.width=8, fig.height=4, echo=FALSE}
 library(sharpshootR)
@@ -489,7 +489,7 @@ Because this is a complex topic, it is described in a [supplemental set of slide
 If you want for more detailed information, see this [relevant paper](http://dx.doi.org/10.1016/j.cageo.2012.10.020). *Editor's note: This site is behind a pay-wall and may not be available to all students. You should consider switching to an open-source file (e.g., the pdf from r-forge.r-project.org).*
 
 
-##5.1.9 Final discussion
+###5.1.9 Final discussion
  * Missing data strategy
  * Meaningful characteristics
  * Standardization of characteristics
@@ -499,10 +499,10 @@ If you want for more detailed information, see this [relevant paper](http://dx.d
  * Application to soil survey and ESD
  
 
-#5.2 Excercises
+##5.2 Excercises
 This is the fun part.
 
-##5.21 Set Up the R Session
+###5.2.1 Set Up the R Session
 Install R packages as needed. Open a new R script file to use as you follow along.
 ```{r, results='hide'}
 # load libraries
@@ -521,7 +521,7 @@ if(.Platform$OS.type != 'unix')
   setInternet2(TRUE)
 ```
 
-###5.2.1.1 Data Sources
+####5.2.1.1 Data Sources
 
 Most of the examples used in the following exercises come from these sources:
 
@@ -536,7 +536,7 @@ Most of the examples used in the following exercises come from these sources:
 In most cases, you can edit the examples and swap-in just about any data that are in a [`SoilProfileCollection` object](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp). For example, pedons from your local NASIS selected set can be loaded with `fetchNASIS()`.
 
 
-####5.2.1.1.1 Try it!
+#####5.2.1.1.1 Try it!
 Tinker with some `SoilProfileCollection` objects.
 
  * Get some data using one of the methods listed above. If you need help, see the manual pages for examples (`?fetchKSSL`) or the [SoilProfileCollection tutorial](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp).
@@ -545,7 +545,7 @@ Tinker with some `SoilProfileCollection` objects.
  * Generate some soil profile sketches.
 
 
-##5.2.2 Evaluating Missing Data
+###5.2.2 Evaluating Missing Data
 
 The `aqp` package provides two functions for checking the fraction of missing data within a `SoilProfileCollection` object. The first function (`evalMissingData`) generates an index that ranges from 0 (all missing) to 1 (all present) for each profile. This index can be used to subset or rank profiles for further investigation. The second function (`missingDataGrid`) creates a visualization of the fraction of data missing within each horizon. Both functions can optionally filter-out horizons that don't typically have data, for example Cr and Cd horizons and R layers.
 
@@ -596,7 +596,7 @@ par(mar=c(0,0,3,1))
 plot(gopheridge.complete, color='clay', id.style='side', label='pedon_id')
 ```
 
-##5.2.3 More on the Distance Matrix and How To Make One
+###5.2.3 More on the Distance Matrix and How To Make One
 
 The following three functions are essential to the creation of a distance matrix:
 
@@ -622,7 +622,7 @@ round(vegdist(sp4[, -1], method = 'gower'), 2)
 ```
 
 
-###5.2.3.1 Distance Calculations with Categorical Data
+####5.2.3.1 Distance Calculations with Categorical Data
 The following example is excerpted from ["A Novel Display of Categorical Pedon Data"](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/sharpshootR/diagnostic-property-plot.html?root=aqp) [@Beaudette2016]. This example illustrates an application of clustering binary data (presence or absence of a diagnostic feature). Internally, the `diagnosticPropertyPlot` function uses the `daisy` function to compute pair-wise distances using the "general dissimilarity coefficient" of Gower [@Gower1971]. A concise summary of this distance metric is in [@Kaufman2005].
 
 ```{r}
@@ -648,7 +648,7 @@ x <- diagnosticPropertyPlot(loafercreek, v, k=5, grid.label='bedrock_kind', dend
 If you are wondering what is in the object `x`, the `str` function or manual page (`?diagnosticPropertyPlot`) can help.
 
 
-##5.2.4 Hierachrical Clustering
+###5.2.4 Hierachrical Clustering
  
 The go-to functions for hierachrical clustering are as follows:
  
@@ -656,7 +656,7 @@ The go-to functions for hierachrical clustering are as follows:
  * `agnes()`: This function is agglomerative, is in "cluster" package, can perform standardization and distance calculations, and implements more linkage critera.
  * `diana()`: This function is divisive, is in "cluster" package, can perform standardization and distance calculations.
 
-###5.2.4.1 Basic Agglomerative Hierarchical Clustering with `hclust`
+####5.2.4.1 Basic Agglomerative Hierarchical Clustering with `hclust`
 The `hclust()` function and resulting `hclust`-class objects are simple to use, but limited.
 
 ```{r, }
@@ -679,7 +679,7 @@ plot(sp4.h, font=2, cex=0.85)
 rect.hclust(sp4.h, 4)
 ```
 
-###5.2.4.2 Better Plots via `ape` Package
+####5.2.4.2 Better Plots via `ape` Package
 
 This example uses a different approach to plotting based on functions and classes from the `ape` package.
 ```{r}
@@ -724,7 +724,7 @@ plot(p, type='unrooted', font=1, cex=0.85, main='unrooted')
 tiplabels(pch=15, col=cols)
 ```
 
-###5.2.4.3 Comparison of Dendrograms
+####5.2.4.3 Comparison of Dendrograms
 
 The following example is simple. Many more possibilities are available in the [dendextend package](https://cran.r-project.org/web/packages/dendextend/index.html).
 ```{r}
@@ -748,7 +748,7 @@ as.phylo(as.hclust(agnes(d.1, method='ward'))), lab.1='diana', lab.2='agnes')
 ```
 
 
-##5.2.5 Centroid and Medoid (Partitioning) Clustering
+###5.2.5 Centroid and Medoid (Partitioning) Clustering
 
 The following creates simulated data for demonstration puposes:
 ```{r, }
@@ -761,9 +761,9 @@ x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
 colnames(x) <- c("x", "y")
 ```
 
-###5.2.5.1 Hard Classes
+####5.2.5.1 Hard Classes
 
-####5.2.5.1.1 K-Means
+#####5.2.5.1.1 K-Means
 ```{r, fig.width=8, fig.height=8, htmlcap="k-means function with default settings"}
 par(mfrow=c(3,3), mar=c(1,1,1,1))
 for(i in 1:9) {
@@ -788,13 +788,13 @@ for(i in 1:9) {
 ```
 
 
-####5.2.5.1.2 K-Medoids
+#####5.2.5.1.2 K-Medoids
 ```{r}
 # pam()
 # clara()
 ```
 
-###5.2.5.2 Fuzzy Clusters
+####5.2.5.2 Fuzzy Clusters
 
 ```{r, fig.width=6, fig.height=6}
 # re-make data, this time with all profiles
@@ -831,7 +831,7 @@ title('Fuzzy Clustering Results in Context', line=-3)
 
 Of the 11 parent materials, 9 were serpentinites. The parent materials in Napa and Tehama Counties were quite different from each other and from those of the nine other sites. Neither had parent rock that contained serpentine minerals. They were, therefore, not serpentinites. The Napa County parent material contained dominantly vermiculite and albite and had minor amounts of Ca-bearing clino-pyroxene. The Tehama County parent material was dominated by grossularite, which is a calcsilicate ugrandite garnet, and had subdominant amounts of the Ca-bearing sorosilicate, pumpellyite, and Ca-bearing clinopyroxene. The rocks from the Shasta and Kings County sites were serpentinite, dominated by serpentine minerals. They had minor amounts of Ca-bearing accessory minerals (calcic clinoamphibole [tremolite] and calcsilicate ugrandite garnet [andradite]). The seven other parent materials were serpentinites and exhibited, at most, trace amounts of Ca-bearing minerals.
 
-###5.2.5.3 How Many Clusters?
+####5.2.5.3 How Many Clusters?
 There is no simple answer to the question "How many clusters are in my data?" Some metrics, however, can be used to help estimate a "resonable" number of clusters. The mean [silhouette width](https://en.wikipedia.org/wiki/Silhouette_(clustering)) is a useful index of "cluster compactness" relative to neighbor clusters [@Rousseeuw1987]. Larger silhouette widths suggest tighter grouping.
 
 ```{r, fig.width=8, fig.height=4}
@@ -852,9 +852,9 @@ grid()
 ```
 
 
-##5.2.6 Ordination (Non-Metric Multidimensional Scaling)
+###5.2.6 Ordination (Non-Metric Multidimensional Scaling)
 
-###5.2.6.1 Sammon's Nonlinear Mapping
+####5.2.6.1 Sammon's Nonlinear Mapping
 
 ```{r, eval=FALSE, echo=FALSE, results='hide', fig.width=10, fig.height=5}
 # re-make data, this time with all profiles
@@ -889,9 +889,9 @@ mtext('Ordination of Distance Matrix\n(all characteristics, standardized)', side
 
 
 
-###5.2.6.2 nMDS with the `vegan` Package
+####5.2.6.2 nMDS with the `vegan` Package
 
-###5.2.6.3 Interpretation and Goodness of Fit
+####5.2.6.3 Interpretation and Goodness of Fit
 
 [Shephard diagram](http://cc.oulu.fi/~jarioksa/softhelp/vegan/html/goodness.metaMDS.html) *Editor's note: You should add some text here.*
 ```{r, eval=FALSE}
@@ -916,13 +916,13 @@ hist(goodness(nmds))
 
 ```
 
-#5.3 Practical Applications
+##5.3 Practical Applications
 
 Before you work through the following examples, you should review the [SoilProfileCollection object tutorial](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp).
 
 
 
-##5.3.1 Pair-Wise Distances Between Soil Profiles 
+###5.3.1 Pair-Wise Distances Between Soil Profiles 
 
 ```{r, message=FALSE}
 # init example data
@@ -949,7 +949,7 @@ plotProfileDendrogram(sp4, clust, dend.y.scale = max(d), scaling.factor = (1/max
 ```
 
 
-##5.3.2 Pair-Wise Distances Between Subgroup-Level Taxa
+###5.3.2 Pair-Wise Distances Between Subgroup-Level Taxa
 
 The following are demonstrations of pair-wise distances computed from categorical data and the use of a dendrogram to organize groups from Soil Taxonomy. [Click here](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/sharpshootR/OSD-dendrogram.html?root=aqp) for details.
 
@@ -982,7 +982,7 @@ d
 
 
 
-##5.3.3 Soil color
+###5.3.3 Soil color
 Just for fun, use hierarchical clustering and nMDS on soil color data from the OSDs that were used in the previous example.
 
 ```{r, fig.width=6, fig.height=6}
@@ -1038,7 +1038,7 @@ points(d.sammon$points, bg=rgb(rgb.data), pch=21, cex=3.5, col='white')
 ```
 
 
-##5.3.4 How Do the Interpretations Compare?
+###5.3.4 How Do the Interpretations Compare?
 Example borrowed from [The R Project](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/SDA-cointerp-tutorial.html?root=aqp).
 
 
@@ -1099,7 +1099,7 @@ mtext('Profile Sketches are from OSDs', 1)
 
 
 
-##5.3.5 GIS Data
+###5.3.5 GIS Data
 
 The following is an investigation of topographic "signatures" in the initial soil mapping project for Sequoia and Kings Canyon, California.
 
@@ -1164,7 +1164,7 @@ title('Map Unit Terrain Signatures')
 ```
 
 
-##5.3.6 Species Composition
+###5.3.6 Species Composition
 
 The following is an example of the use of ordination to investigate patterns in species composition. It is from MLRA 22A–Sierra Nevada Mountains, CA. Data courtesy of David Evans (Sonora, CA).
 
@@ -1248,7 +1248,7 @@ title('Sites', line=-0.5)
 This document is based on `aqp` version `r utils::packageDescription("aqp", field="Version")` and `soilDB` version `r utils::packageDescription("soilDB", field="Version")` and `sharpshootR` version `r utils::packageDescription("sharpshootR", field="Version")`.
 
 
-#5.4 References
+##5.4 References
 
 
 <!-- * [problems assoc. with too many dimensions](https://en.wikipedia.org/wiki/Clustering_high-dimensional_data) -->
