@@ -220,7 +220,8 @@ select <- q[1] <= d$x & d$x <= q[2]
 polygon(x = c(q[1], d$x[select], q[2]), y = c(0, d$y[select], 0), col='grey')
 abline(v = quantile(r, p = 0.5), lty = 2)
 ```
-Figure 1.— *Editor's note: Please add a caption. Because this chapter uses some captions, all of the figures should have a caption. Note also that many of the figures do not appear in the RMD file. I don't know if the lack of imagery in the RMD file matters other than making it difficult to predict what the HTML file will look like.*
+Figure 1.—  
+*Editor's note: Please add a caption. Because this chapter uses some captions, all of the figures should have a caption. Note also that many of the figures do not appear in the RMD file. I don't know if the lack of imagery in the RMD file matters other than making it difficult to predict what the HTML file will look like.*
 
 A histogram or density plot provides a quick visual reference for determining normality as discussed in section 4.1. Distributions are typically normal, bimodal, or skewed.  
 
