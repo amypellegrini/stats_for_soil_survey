@@ -523,33 +523,33 @@ if(.Platform$OS.type != 'unix')
 
 ###5.2.1.1 Data Sources
 
-Most of the examples used in the following exercises come from the following sources:
+Most of the examples used in the following exercises come from these sources:
 
-1. built-in data sets from the `aqp` and `soilDB` packages ("sp4", "gopheridge", and "loafercreek")
-2. results from [`fetchNASIS()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/fetchNASIS-mini-tutorial.html?root=aqp): pedon data from the local NASIS selected set
-3. results from [`fetchKSSL()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/KSSL-demo.html?root=aqp): lab characterization data from the SoilWeb snapshot
-4. results from [`fetchOSD()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/sharpshootR/OSD-dendrogram.html?root=aqp): basic morphologic and taxonomic data from the SoilWeb snapshot 
-5. results from [`SDA_query()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/SDA-tutorial.html?root=aqp): *live* SSURGO spatial and tabular data from [Soil Data Access](http://sdmdataaccess.nrcs.usda.gov/)
-6. data from SSR 2, as CSV, downloaded from class [GitHub site](https://github.com/ncss-tech/stats_for_soil_survey/tree/master/data/clustering_and_ordination)
+1. Built-in data sets from the `aqp` and `soilDB` packages ("sp4," "gopheridge," and "loafercreek").
+2. Results from [`fetchNASIS()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/fetchNASIS-mini-tutorial.html?root=aqp): pedon data from the local NASIS selected set.
+3. Results from [`fetchKSSL()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/KSSL-demo.html?root=aqp): lab characterization data from the SoilWeb snapshot.
+4. Results from [`fetchOSD()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/sharpshootR/OSD-dendrogram.html?root=aqp): basic morphologic and taxonomic data from the SoilWeb snapshot .
+5. Results from [`SDA_query()`](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/SDA-tutorial.html?root=aqp): live SSURGO spatial and tabular data from [Soil Data Access](http://sdmdataaccess.nrcs.usda.gov/).
+6. Data from SSR 2, as CSV, downloaded from class [GitHub site](https://github.com/ncss-tech/stats_for_soil_survey/tree/master/data/clustering_and_ordination).
 
 
-In most cases, you can edit the examples and swap-in just about any data that are or have been upgraded to a [`SoilProfileCollection` object](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp). For example, pedons from **your** local NASIS selected set can be loaded with `fetchNASIS()`.
+In most cases, you can edit the examples and swap-in just about any data that are in a [`SoilProfileCollection` object](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp). For example, pedons from your local NASIS selected set can be loaded with `fetchNASIS()`.
 
 
 ####5.2.1.1.1 Try it!
-Tinker with some `SoilProfileCollection` objects:
+Tinker with some `SoilProfileCollection` objects.
 
- * Get some data using one of the methods listed above, if you need help see the manual pages for examples (`?fetchKSSL`) or the [SoilProfileCollection tutorial](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp).
+ * Get some data using one of the methods listed above. If you need help, see the manual pages for examples (`?fetchKSSL`) or the [SoilProfileCollection tutorial](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp).
  * Determine the number of profiles and horizons within the collection.
- * View and extract some *site* and *horizon* attributes.
+ * View and extract some site and horizon attributes.
  * Generate some soil profile sketches.
 
 
-##5.22 Evaluating Missing Data
+##5.2.2 Evaluating Missing Data
 
-The `aqp` package provides two functions for checking the fraction of missing data within a `SoilProfileCollection` object. The first function (`evalMissingData`) generates an index that ranges from 0 (all missing) to 1 (all present) for each profile. This index can be used to subset or rank profiles for further investigation. The second function (`missingDataGrid`) creates a visualization of the *fraction* of data missing within each horizon. Both functions can optionally filter-out horizons that don't typically have data such as Cr, R, or Cd horizons.
+The `aqp` package provides two functions for checking the fraction of missing data within a `SoilProfileCollection` object. The first function (`evalMissingData`) generates an index that ranges from 0 (all missing) to 1 (all present) for each profile. This index can be used to subset or rank profiles for further investigation. The second function (`missingDataGrid`) creates a visualization of the fraction of data missing within each horizon. Both functions can optionally filter-out horizons that don't typically have data such as Cr, R, or Cd horizons.
 
-Lets try both functions on the `gopheridge` sample dataset.
+The following examples run the functions on the `gopheridge` sample dataset.
 
 **evalMissingData**
 ```{r, fig.width=10, fig.height=4}
@@ -586,7 +586,7 @@ res <- missingDataGrid(gopheridge, max_depth=100, vars=c('clay', 'sand', 'phfiel
 head(res)
 ```
 
-For now, lets extract those profiles with a complete set of field-described clay, sand, or pH values for later use.
+For now, extract those profiles that have a complete set of field-described clay, sand, or pH values for later use.
 ```{r, fig.width=8, fig.height=4}
 # be sure to read the manual page for this function
 gopheridge.complete <- subsetProfiles(gopheridge, s = "data.complete == 1")
@@ -598,14 +598,14 @@ plot(gopheridge.complete, color='clay', id.style='side', label='pedon_id')
 
 ##5.2.3 More on the Distance Matrix and How To Make One
 
-These three functions are essential to the creation of a **distance matrix**:
+The following three functions are essential to the creation of a distance matrix:
 
-* `dist()` (base R), simple and fast, limited number of distance metrics
-* `daisy()` ([cluster package](https://cran.r-project.org/web/packages/cluster/index.html)), better selection of distance metrics, simple standardization, my go-to function
-* `vegdist` ([vegan package](https://cran.r-project.org/web/packages/vegan/index.html)), many distance metrics, primarily designed for species composition data
+* `dist()`: In base R, is simple and fast,  has a limited number of distance metrics
+* `daisy()`: In [cluster package](https://cran.r-project.org/web/packages/cluster/index.html), has a better selection of distance metrics,  has simple standardization, is a "go-to" function
+* `vegdist`: In [vegan package](https://cran.r-project.org/web/packages/vegan/index.html), has many distance metrics, is primarily designed for species composition data
 
 
-A short demo:
+The following is a short demonstration:
 ```{r, }
 # get some example data from the aqp package
 data('sp4', package = 'aqp')
@@ -623,7 +623,7 @@ round(vegdist(sp4[, -1], method = 'gower'), 2)
 
 
 ###5.2.3.1 Distance Calculations with Categorical Data
-An example excerpted from [here](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/sharpshootR/diagnostic-property-plot.html?root=aqp), that illustrates an application of clustering binary data (diagnostic feature presence / absence). Internally, the `diagnosticPropertyPlot` function is utilizing the `daisy` function to compute pair-wise distances using the **general dissimilarity coefficient of Gower** [@Gower1971]. A concise summary of this distance metric are given in @Kaufman2005.
+The following example is excerpted from ["A Novel Display of Categorical Pedon Data"](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/sharpshootR/diagnostic-property-plot.html?root=aqp) [@Beaudette2016]. This example illustrates an application of clustering binary data (presence or absence of a diagnostic feature). Internally, the `diagnosticPropertyPlot` function uses the `daisy` function to compute pair-wise distances using the "general dissimilarity coefficient" of Gower [@Gower1971]. A concise summary of this distance metric is in [@Kaufman2005].
 
 ```{r}
 # load some example NASIS data
@@ -645,16 +645,16 @@ v <- c('lithic.contact', 'paralithic.contact', 'argillic.horizon',
 x <- diagnosticPropertyPlot(loafercreek, v, k=5, grid.label='bedrock_kind', dend.label = 'taxonname')
 ```
 
-Hmmm... I wonder what is in the object `x`. The `str` function or manual page (`?diagnosticPropertyPlot`) can help.
+If you are wondering what is in the object `x`, the `str` function or manual page (`?diagnosticPropertyPlot`) can help.
 
 
 ##5.2.4 Hierachrical Clustering
  
-The go-to functions for **hierachrical clustering** are:
+The go-to functions for hierachrical clustering are as follows:
  
- * `hclust()`: (agglomerative) base R, requires a distance matrix, implements most of the commonly used **linkage critera**
- * `agnes()`: (agglomerative) "cluster" package, can perform standardization and distance calculations, implements more **linkage critera**
- * `diana()`: (divisive) "cluster" package, can perform standardization and distance calculations
+ * `hclust()`: Agglomerative, in base R, requires a distance matrix, implements most of the commonly used linkage critera
+ * `agnes()`: Agglomerative, in "cluster" package, can perform standardization and distance calculations, implements more linkage critera
+ * `diana()`: Divisive, in "cluster" package, can perform standardization and distance calculations
 
 ###5.2.4.1 Basic Agglomerative Hierarchical Clustering with `hclust`
 The `hclust()` function and resulting `hclust`-class objects are simple to use, but limited.
@@ -681,7 +681,7 @@ rect.hclust(sp4.h, 4)
 
 ###5.2.4.2 Better Plots via `ape` Package
 
-Lets do this again, this time using a different approach to plotting based on functions and classes from the `ape` package.
+This example uses a different approach to plotting based on functions and classes from the `ape` package.
 ```{r}
 # re-make data, this time with all profiles
 data('sp4', package = 'aqp')
@@ -726,7 +726,7 @@ tiplabels(pch=15, col=cols)
 
 ###5.2.4.3 Comparison of Dendrograms
 
-Simple example here, many more possibilities with the [dendextend package](https://cran.r-project.org/web/packages/dendextend/index.html).
+The followin example is simple. Many more possibilities are available in the [dendextend package](https://cran.r-project.org/web/packages/dendextend/index.html).
 ```{r}
 # load sample dataset from aqp package
 data(sp3)
@@ -750,7 +750,7 @@ as.phylo(as.hclust(agnes(d.1, method='ward'))), lab.1='diana', lab.2='agnes')
 
 ##5.2.5 Centroid and Medoid (Partitioning) Clustering
 
-Lets make some simulated data for demonstration puposes.
+The following creates simulated data for demonstration puposes:
 ```{r, }
 # nice colors for later
 col.set <- brewer.pal(9, 'Set1')
@@ -829,13 +829,10 @@ plot(sp4.std, color='colors', cex.names=0.75)
 title('Fuzzy Clustering Results in Context', line=-3)
 ```
 
-> Nine of the 11 parent materials were serpentinites. The Napa and Tehama county parent materials were quite different from each other and from the nine other sites. Neither parent rock contained serpentine minerals and were therefore not serpentinites. The Napa County parent material contained dominantly vermiculite and albite, with minor amounts of Ca-bearing clino-pyroxene. The Tehama County parent material was dominated by grossularite, a calcsilicate ugrandite garnet, with subdominant amounts of the Ca-bearing sorosilicate, pumpellyite, and Ca-bearing clinopyroxene. The rocks from the Shasta and Kings county sites were serpentinite, dominated by serpentine minerals, but had minor amounts of Ca-bearing accessory minerals (calcic clinoamphibole [tremolite] and calcsilicate ugrandite garnet [andradite]). The seven other parent materials were serpentinites and exhibited, at most, trace amounts of Ca-bearing minerals.
-
-
-
+Of the 11 parent materials, 9 were serpentinites. The parent materials in Napa and Tehama counties were quite different from each other and from those of the nine other sites. Neither parent rock contained serpentine minerals and were therefore not serpentinites. The Napa County parent material contained dominantly vermiculite and albite and had minor amounts of Ca-bearing clino-pyroxene. The Tehama County parent material was dominated by grossularite, which is a calcsilicate ugrandite garnet, and had subdominant amounts of the Ca-bearing sorosilicate, pumpellyite, and Ca-bearing clinopyroxene. The rocks from the Shasta and Kings county sites were serpentinite, dominated by serpentine minerals. They had minor amounts of Ca-bearing accessory minerals (calcic clinoamphibole [tremolite] and calcsilicate ugrandite garnet [andradite]). The seven other parent materials were serpentinites and exhibited, at most, trace amounts of Ca-bearing minerals.
 
 ###5.2.5.3 How Many Clusters?
-There is no simple answer to the question *"how many clusters are there in my data?"*. However, there are some metrics that can be used to help estimate a "resonable" number of clusters. The mean [**silhouette width**](https://en.wikipedia.org/wiki/Silhouette_(clustering)) is a useful index of "cluster compactness" relative to neightbor clusters [@Rousseeuw1987]. Larger silhouette widths suggest tighter grouping.
+There is no simple answer to the question "How many clusters are in my data?". Some metrics, however, can be used to help estimate a "resonable" number of clusters. The mean [silhouette width](https://en.wikipedia.org/wiki/Silhouette_(clustering)) is a useful index of "cluster compactness" relative to neightbor clusters [@Rousseeuw1987]. Larger silhouette widths suggest tighter grouping.
 
 ```{r, fig.width=8, fig.height=4}
 # re-make data, this time with all profiles
@@ -857,7 +854,7 @@ grid()
 
 ##5.2.6 Ordination (Non-Metric Multidimensional Scaling)
 
-###5.2.6.1 Sammon's Non-Linear Mapping
+###5.2.6.1 Sammon's Nonlinear Mapping
 
 ```{r, eval=FALSE, echo=FALSE, results='hide', fig.width=10, fig.height=5}
 # re-make data, this time with all profiles
@@ -921,12 +918,11 @@ hist(goodness(nmds))
 
 #5.3 Practical Applications
 
-Before working through the following examples, it would be a good idea to review the [SoilProfileCollection object tutorial](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp).
+Before you work through the following examples, it would be a good idea to review the [SoilProfileCollection object tutorial](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/aqp/aqp-intro.html?root=aqp).
 
 
 
 ##5.3.1 Pair-Wise Distances Between Soil Profiles 
-
 
 ```{r, message=FALSE}
 # init example data
@@ -953,10 +949,9 @@ plotProfileDendrogram(sp4, clust, dend.y.scale = max(d), scaling.factor = (1/max
 ```
 
 
-
 ##5.3.2 Pair-Wise Distances Between Subgroup-Level Taxa
 
-Demonstration of pair-wise distances computed from categorical data and the use of a dendrogram to organize groups from Soil Taxonomy. Details [here](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/sharpshootR/OSD-dendrogram.html?root=aqp).
+The following are demonstrations of pair-wise distances computed from categorical data and the use of a dendrogram to organize groups from Soil Taxonomy. [Click here](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/sharpshootR/OSD-dendrogram.html?root=aqp) for details.
 
 ```{r, fig.width=10, fig.height=4.5}
 # define a vector of series
@@ -979,7 +974,7 @@ par(mar=c(0,1,1,1))
 d <- SoilTaxonomyDendrogram(s, scaling.factor = 0.01)
 ```
 
-Check resulting distance matrix.
+Check the resulting distance matrix.
 ```{r, eval=FALSE}
 d
 ```
@@ -988,7 +983,7 @@ d
 
 
 ##5.3.3 Soil color
-Just for fun, lets use hierarchical clustering and nMDS on soil color data from the OSDs that were used in the previous example.
+Just for fun, use hierarchical clustering and nMDS on soil color data from the OSDs that were used in the previous example.
 
 ```{r, fig.width=6, fig.height=6}
 # these are moist colors
@@ -1044,7 +1039,7 @@ points(d.sammon$points, bg=rgb(rgb.data), pch=21, cex=3.5, col='white')
 
 
 ##5.3.4 How Do the Interpretations Compare?
-Example borrowed from [here](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/SDA-cointerp-tutorial.html?root=aqp).
+Example borrowed from [The R Project](https://r-forge.r-project.org/scm/viewvc.php/*checkout*/docs/soilDB/SDA-cointerp-tutorial.html?root=aqp).
 
 
 ```{r}
@@ -1106,7 +1101,7 @@ mtext('Profile Sketches are from OSDs', 1)
 
 ##5.3.5 GIS Data
 
-Investigation of topographic "signatures" in the Sequoia Kings Canyon initial soil mapping project.
+The following is an investigation of topographic "signatures" in the initial soil mapping project for Sequoia Kings Canyon.
 
 ```{r, fig.width=8, fig.height=8, results='hide'}
 library(plyr)
@@ -1171,7 +1166,7 @@ title('Map Unit Terrain Signatures')
 
 ##5.3.6 Species Composition
 
-An example of using ordination to investigate patterns in species composition from MLRA 22A--Sierra Nevada Mountains, CA. Data courtesy of David Evans (Sonora, CA).
+The following is an example of the use of ordination to investigate patterns in species composition. It is from MLRA 22A--Sierra Nevada Mountains, CA. Data courtesy of David Evans (Sonora, CA).
 
 ```{r}
 library(reshape2)
@@ -1254,7 +1249,6 @@ This document is based on `aqp` version `r utils::packageDescription("aqp", fiel
 
 
 #5.4 References
-*Editor's note:
 
 
 <!-- * [problems assoc. with too many dimensions](https://en.wikipedia.org/wiki/Clustering_high-dimensional_data) -->
