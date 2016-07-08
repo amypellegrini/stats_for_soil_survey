@@ -17,7 +17,7 @@ output:
 # Chapter 6: Linear Regression
 ## 6.0 Introduction
 
-Linear regression has been used for soil survey applications since the early 1900s when Briggs and McLane (1907) developed a pedotransfer function to estimate the wilting coefficient as a function of soil particle size. 
+Linear regression has been used for soil survey applications since the early 1900s, when Briggs and McLane (1907) developed a pedotransfer function to estimate the wilting coefficient as a function of soil particle size. 
 
 Wilting coefficient = 0.01(sand) + 0.12(silt) + 0.57(clay)
 
@@ -29,19 +29,19 @@ $f(y) = \beta_{0} + \beta_{1}x + \varepsilon$
 - $\beta_{1}x$ = slope of the fitted line
 - $\varepsilon$ = the error term
 
-When more than one independent variable is used in the regression, it is referred to as multiple linear regression. In regression models, the response (or dependent) variable must always be continuous. The predictor (or independent) variable(s) can be continuous or categorical. In order to use linear regression or any linear model, the errors (i.e. residuals) must be normally distributed. Most environmental data are skewed and require transformations to the response variable (such as square root or log) for use in linear models. Normality can be assessed using a QQ plot or histogram of the residuals.
+When more than one independent variable is used in the regression, it is referred to as multiple linear regression. In regression models, the response (or dependent) variable must always be continuous. The predictor (or independent) variable(s) can be continuous or categorical. In order for linear regression or any linear model to be used, the errors (i.e., residuals) must be normally distributed. Most environmental data are skewed. Such data require transformations to the response variable (e.g., square root or log) before the data can be used in linear models. Normality can be assessed using a QQ plot or histogram of the residuals.
 
 
 ## 6.1 Linear Regression Example
 
-Now that we've got some of the basic theory out of the way we'll move on to a real example, and address any additional theory where it relates to specific steps in the modeling process. The example selected for this chapter comes from Joshua Tree National Park (JTNP)(i.e. CA794) in the Mojave desert. The landscape is composed primarily of closed basins ringed by granitic hills and mountains (Peterson, 1981). The problem tackled here is modeling the distribution of surface rock fragments as a function of digital elevation model (DEM) and Landsat derivatives.
+Now that some of the basic theory is out of the way, the next step is move on to a real example. Additional theory is addressed where it relates to specific steps in the modeling process. The example selected for this chapter comes from soil survey area CA794, Joshua Tree National Park (JTNP) in the Mojave desert. The landscape is composed primarily of closed basins ringed by granitic hills and mountains (Peterson, 1981). The problem tackled here is modeling the distribution of surface rock fragments as a function of digital elevation model (DEM) and Landsat derivatives.
 
-With this dataset we'll encounter some challenges. To start with, fan piedmont landscapes typically have relatively little relief. Since most of our predictors will be derivatives of elevation, that won't leave us with much to work with. Also, our elevation data comes from the USGS National Elevation dataset (NED), which provides considerably less detail than say LiDAR or IFSAR data (Shi et al., 2012). Lastly our pedon dataset like most in NASIS, hasn't received near as much quality control as have the components. So we'll need to wrangle some of the pedon data before we can analyze it. These are all typical problems encountered in any data analysis and should be good practice.
+In this dataset, you'll encounter some challenges. To start with, fan piedmont landscapes typically have relatively little relief. Because most of the predictors are derivatives of elevation, you won't have much to work with. Also, the elevation data comes from the USGS National Elevation dataset (NED), which provides considerably less detail than LiDAR or IFSAR data (Shi et al., 2012). Lastly, the pedon dataset—like most in NASIS—hasn't received nearly as much quality control as have the components. So, you'll need to wrangle some of the pedon data before you can analyze it. These problems are all typical of those encountered in any data analysis and should therefore be good practice.
 
 
 ### 6.1.1 Load Packages
 
-To start, as always we need to load some extra R packages. This is will become a familar routine every time you start R. Most of the basic functions we need to develop a linear regression model are contained in base R, but the following packages contain some useful spatial and data manipulation functions. Believe it or not we will use all of them and more.
+To start, as always, you need to load some extra R packages. This is becomes a familar routine every time you start R. Most of the basic functions you need to develop a linear regression model are contained in base R, but the following packages contain some useful spatial and data manipulation functions. Believe it or not, you will use all of them and more.
 
 ```{r load packages, message=FALSE, warning=FALSE}
 library(aqp) # specialized soil classes and functions
@@ -59,7 +59,7 @@ library(DAAG) # additional regression tools
 
 ### 6.1.2 Read in Data
 
-Hopefully like all good soil scientists and ecological site specialists you enter your field data into NASIS. Better yet hopefully someone else did it for you! Once data are captured in NASIS it is much easier to import them into R, extract the pieces you need, manipulate them, model them, etc. If it's not entered into NASIS, it may as well not exist.
+Hopefully, like all good soil scientists and ecological site specialists, you enter your field data into NASIS. Better yet, hopefully someone else does it for you! Once data are captured in NASIS, you will find it much easier to import them into R, extract the pieces you need, manipulate them, model them, etc. If the data are not entered into NASIS, they may as well not exist.
 
 ```{r import data}
 # pedons <- fetchNASIS(rmHzErrors = FALSE) # beware the error messages, by default they don't get imported unless you override the default, which in our case shouldn't cause any problems
@@ -72,7 +72,7 @@ str(pedons, max.level = 2) # Examine the makeup of the data we imported from NAS
 
 ### 6.2.1 Data Wrangling
 
-Generally before we begin modeling it is good to explore the data. By examining a simple summary we can quickly see the breakdown of our data. Unfortunately, odds are all the data haven't been consistently populated like they should be.
+Generally, it is good to explore the data before you begin modeling. By examining a simple summary, you can quickly see the breakdown of your data. Unfortunately, the odds are that all of the data haven't been consistently populated.
 
 ```{r consistency}
 s <- site(pedons) # extract the site data frame from the pedons soil profile collection object
@@ -90,12 +90,12 @@ sum(s$frags > 100) # number of samples greater than 100
 sum(s$frags < 1) # number of samples less than  1
 ```
 
-Examining the results we can see that the distribution of our surface rock fragments are skewed. In addition, we apparently have values in excess of 100 and some that equal 0. Those values in excess of 100 are likely recording errors, while the values that equal 0 could either be truly 0 or NA.
+By examining the results, you can see that the distribution of surface rock fragments is skewed. In addition, some values are apparently in excess of 100 and some equal 0. The values in excess of 100 are likely recording errors. The values that equal 0 could either truly be 0 or could be NA.
 
 
 ### 6.2.2 Geomorphic Data
 
-Another obvious place to look is at the geomorphic data in the site table. This information is intended to help differentiate where our soil observations exist on the landscape. If populated consistently it could potentially be used in future disaggregation efforts, as demonstrated by Nauman and Thompson (2014).
+Another obvious place to look at is the geomorphic data in the site table. This information is intended to help differentiate where on the landscape our soil observations were made. If populated consistently, the geomorphic data could potentially be used in future disaggregation efforts, as demonstrated by Nauman and Thompson (2014).
 
 #### 6.2.2.1 Landform vs. Fragments
 
@@ -113,7 +113,7 @@ arrange(test, frags[, 2], decreasing = TRUE) # sort the data frame by the frags 
 # test[order(test$surface_total[, 2], decreasing = TRUE), ]
 ```
 
-There are obviously a wide variety of landforms. However generally it appears that erosional landforms have the most surface rock fragments. Let's generalize the `landform.string` and have a closer look.
+There are obviously a wide variety of landforms. It generally appears, however, that erosional landforms have the most surface rock fragments. Generalize the `landform.string` and have a closer look.
 
 ```{r}
 s$landform <- ifelse(grepl("fan|terrace|sheet|drainageway|wash", s$landform.string), "fan", "hill") # generalize the landform.string
@@ -126,7 +126,7 @@ arrange(test, landform, frags[, 2], decreasing = TRUE) # sort data frame by colu
 densityplot(~ frags + surface_cobbles + surface_gravel | landform, data = s, auto.key = TRUE)
 ```
 
-So it does appear that erosional landforms generally do have more surface rock fragments than depositional landforms, but not by much. It also appears that most of the difference is coming from the amount of cobbles, as seen in the density plot.
+It appears that erosional landforms generally do have more surface rock fragments than depositional landforms, but not by much. It also appears that most of the difference is from the amount of cobbles, as seen in the density plot.
 
 
 #### 6.2.2.2 Hillslope Position
@@ -137,7 +137,7 @@ test <- aggregate(frags ~ landform + hillslope_pos, data = s, quantile2)
 arrange(test, landform, frags[, 2], decreasing = TRUE)
 ```
 
-If we examine the different hillslope positions for each generic landform we can see other trends. For hills, it appears that surface rock fragments decrease as we traverse up the slope, with the exception of the toeslopes which are typically associated with drainageways. On fans we see the opposite relationship, with toeslopes again being the exception. 
+If you examine the different hillslope positions for each generic landform, you can see other trends. For hills, the surface rock fragments appear to decrease as you traverse up the slope. The exception is the toeslopes, which are typically associated with drainageways. On fans, you see the opposite relationship, and the toeslopes are again the exception. 
 
 
 #### 6.2.2.3 Slope Shape
@@ -148,7 +148,7 @@ test <- aggregate(frags ~ landform + paste(shapedown, shapeacross), data = s, qu
 arrange(test, landform, frags[, 2], decreasing = TRUE)
 ```
 
-When examining slope shape on hills it appears that concave positions have greater amounts of surface rock fragments. I can't see any sensible pattern with slope shape on fans.
+When you examine slope shape on hills, the concave positions appear to have greater amounts of surface rock fragments. No sensible pattern is apparent with slope shape on fans.
 
 
 #### 6.2.2.4 Surface Morphometry, Depth, and Surface Rock Fragments
@@ -167,12 +167,12 @@ spm(s_fan, use = "pairwise", main = "Scatterplot Matrix for Fans")
 spm(s_hill, use = "pairwise", main = "Scatterplot Matrix for Hills")
 ```
 
-In examing the correlation matrices we don't see a strong relationships with either elevation for slope gradient.
+In examing the correlation matrices, you don't see a strong relationships with either elevation for slope gradient.
 
 
 #### 6.2.2.5 Soil Scientist Bias
 
-Next we'll look at soil scientist bias. The question being: Do some soil scientists have a tendency to describe more surface rock fragments than others? Due to the excess number of soil scientist that have worked on CA794, including detailees, we've filtered the names of soil scientist to include just the top 3 soil scientists with the most documentation and have given priority to those soil scientists when they occur together.
+The question of soil scientist bias is exemplified thus: Do some soil scientists have a tendency to describe more surface rock fragments than others? Due to the large number of soil scientist (including detailees) that worked on the survey of CA794, the names of soil scientists have been filted to include just the three with the most documentation. Priority is given to those soil scientists when they occur together.
 
 ```{r}
 # Custom function to filter out the data for the 3 soil scientists with the most data
@@ -195,12 +195,12 @@ test <- aggregate(frags ~ landform + describer2, data = s, function(x) round(qua
 arrange(test, landform, frags[, 2], decreasing = TRUE)
 ```
 
-In looking at the numbers it appears we have a bit of a trend on both fans and hills. We can see that Stephen always describes the least overall amount of surface rock fragments, while Paul and Peter trade places describing the most on hills and fans. By looking the maximum values we can also see who is recording surface rock fragments in excess of 100%. However, while these trends are suggestive and informative, they are not definitive because they don't take into account other factors. We'll examine this potential bias more closely later.
+In looking at the numbers, you can see a bit of a trend on both fans and hills. You can see that Stephen always describes the least overall amount of surface rock fragments, and Paul and Peter trade places describing the most on hills and fans. By looking at the maximum values, you can also see who is recording surface rock fragments in excess of 100%. Although these trends are suggestive and informative, they are not definitive because they don't take into account other factors.
 
 
 ### 6.2.3 Plot Coordinates
 
-Where do our points plot? We can plot the general location in R, but for a closer look, we'll export them to a Shapefile so that they can viewed in a proper GIS. Notice in the figure below the number of points that fall outside the survey boundary. What it doesn't show is the points in the Ocean or Mexico!
+Where do the points plot? You can plot the general location in R, but for a closer look, you will export them to a shapefile so that they can be viewed in a proper GIS. Notice in the figure below the number of points that fall outside the survey boundary. What it doesn't show are the points in the Ocean or Mexico!
 
 ```{r plot}
 # Convert soil profile collection to a spatial object
@@ -229,15 +229,15 @@ plot(pedons_sp, col='red', add = TRUE) # notice the points outside the boundary
 
 #### 6.2.3.1 Exercise 1: View the Geodata in ArcGIS
 
-- Examine the shapefile in ArcGIS along with our potential predictive variables (hint classify the Shapefile symbology using the frags column)
-- Discuss with your group, and report your observations or hypotheses
+- Examine the shapefile in ArcGIS along with our potential predictive variables. (Hint: Classify the shapefile symbology using the frags column.)
+- Discuss your findings with your group, and report your observations or hypotheses.
 
 
 ### 6.2.4 Extracting Spatial Data
 
-Prior to any spatial analysis or modeling, you will need to develop a suite of geodata files that can be intersected with your field data locations. This is, in and of itself a difficult task and should be facilitated by your Regional GIS Specialist. Geodata files typically used would consist of derivatives from a DEM or satellite imagery. Prior to any prediction it is also necessary to ensure the geodata files have the same projection, extent, and cell size. Once we have the necessary files we can construct a list in R of the file names and paths, read the geodata into R, and then extract the geodata values where they intersect with field data.
+Prior to spatial analysis or modeling, you need to develop a suite of geodata files that can be intersected with your field data locations. This is, in and of itself, a difficult task and should be facilitated by your regional GIS specialist. The geodata files used would typically consist of derivatives from a DEM or satellite imagery. Prior to making predictions, you must also ensure the geodata files have the same projection, extent, and cell size. Once you have the necessary files, you can construct a list in R of the file names and paths, read the geodata into R, and then extract the geodata values where they intersect with field data.
 
-As you can see below their is an almost limitless number of variables we could inspect.
+As you can see below, the number of variables you could inspect is almost limitless.
 
 ```{r extract, eval=FALSE}
 # set file path
@@ -301,9 +301,9 @@ data$sw <- cos(data$aspect - 255)
 
 ### 6.2.5 Examine Spatial Data 
 
-With our spatial data in hand, we can now see whether any of the variables have a linear relationship with surface rock fragments. 
+With your spatial data in hand, you can now see if any of the variables have a linear relationship with surface rock fragments. 
 
-At the beginning of our analysis we noticed some issues with our data. Particularly that the distribution of our data was skewed, and included values greater than 100 and equal to 0. So before we start lets filter those out and transform the surface rock fragments using a logit transform.
+At the beginning of the analysis, some issues were noted about the data. Specifically, the distribution of the data was skewed and the data included values greater than 100 and equal to 0. Those need to be filtered out, and the surface rock fragments need to be transformed using a logit transform. *Editor's note: What needs to be filtered out? the values greater than 100?*
 
 ```{r spatial}
 train <- data
@@ -351,18 +351,18 @@ bwplot(fragst ~ cluster2, data = train)
 
 The correlation matrices and scatter plots above show that that surface rock fragments have moderate correlations with some of the variables, particularly the landsat bands and derivatives. This makes sense given that surface rock fragments are at the surface, unlike most soil properties. 
 
-By examining the correlations between some of the predictors we can also see that some are *collinear* (e.g. > 0.6), such as the landsat bands. Therefore these variables are redundant as they describe almost the same thing. This collinearity will also make it difficult to estimate our regression coefficients. Considering that we already have other derivatives of landsat in our dataset, which are intentionally designed to reduce their collinearity, we may as well exclude the landsat bands from our dataset all together.
+By examining the correlations between some of the predictors, you can also see that some are *collinear* (e.g. > 0.6), such as the landsat bands. Therefore, these variables are redundant because they describe almost the same thing. This collinearity also makes it difficult to estimate regression coefficients. Considering that the dataset already has other derivatives of landsat that are intentionally designed to reduce their collinearity, you can exclude the landsat bands from the dataset altogether.
 
-Examining the density plots on the diagonal axis of the scatterplots we can see that some variables are skewed while others are bimodal. Lastly the boxplot show a trend amongst the clusters when sorted according to annual temperature.
+By examining the density plots on the diagonal axis of the scatterplots, you can see that some variables are skewed and others are bimodal. Lastly, the box plot shows a trend among the clusters when sorted according to annual temperature.
 
 
 ## 6.3 Modeling
 
 ### 6.3.1 Model Training
 
-Modeling is an iterative process that cycles between fitting and evaluating alternative models. Compared to tree and forest models, linear and generalized models require more input from the user. Automated model selection procedures are available, but are discouraged because they generally result in complex and unstable models. This is in part due to correlation amongst the predictive variables that can confuse the model. Also, the order in which the variables are included or excluded from the model effects the significance of the other variables, and thus several weak predictors might mask the effect of one strong predictor. For this reason, it is best to begin with a selection of predictors that are known to be useful, and grow the model incrementally. 
+Modeling is an iterative process that cycles between fitting and evaluating alternative models. Compared to tree and forest models, linear and generalized models require more input from the user. Automated model selection procedures are available. The use of such procedures, however, is discouraged because they generally result in complex and unstable models. This is in part due to correlation amongst the predictive variables that can confuse the model. Also, the order in which the variables are included or excluded from the model effects the significance of the other variables. Thus, several weak predictors might mask the effect of one strong predictor. For this reason, it is best to begin with a selection of predictors that are known to be useful and then grow the model incrementally. 
 
-The example below is known as a forward selection procedure, where a full model is fit and compared against a null model, to assess the effect of the different predictors. For testing alternative models, the Akaike's Information Criterion (AIC) is used. When using AIC to assess predictor significance, a smaller number is better.
+The following is an example of the "forward selection procedure." A full model is fit and compared against a null model to assess the effect of the predictors. For testing alternative models, the Akaike's Information Criterion (AIC) is used. When AIC is used to assess predictor significance, a smaller number is better.
 
 ```{r}
 load(file = "C:/workspace/ch7_data.Rdata")
@@ -374,9 +374,9 @@ null <- lm(fragst ~ 1, data = train) # "~ 1" just includes an intercept
 add1(null, full, test = "F") # using the AIC test the effect of '
 ```
 
-We can see as the correlation matrices showed earlier that the pc predictors have some of the smallest AIC and reduce the deviance the most. So let's add pc\_2 to the `null` model using the `update()` function. Then continue using the `add1()` or `drop1()` functions, until the model is saturated.
+You can see, as the correlation matrices showed earlier, that the pc predictors have some of the smallest AIC and reduce the deviance the most. So, add pc\_2 to the `null` model using the `update()` function. Then continue using the `add1()` or `drop1()` functions until the model is saturated.
 
-We can continue adding predictors to the model until we no longer see an increase in the adjusted R^2^. At some point the adjusted R^2^ will level off, versus the R^2^ which will continue to incrementally increase. The difference between the adjusted R^2^ vs the R^2^, is that the adjusted R^2^ is penalizes model for each additional predictor added to model, similarly to the AIC.
+You can continue adding predictors to the model until you no longer see an increase in the adjusted R^2^. At some point, the adjusted R^2^ will level off versus the R^2^, which will continue to incrementally increase. The difference between the adjusted R^2^ and the R^2^ is that the adjusted R^2^ is penalized for each additional predictor added to model, similarly to the AIC.
 
 ```{r}
 fragst_lm <- update(null, . ~ . + pc_2) # add one or several variables to the model 
@@ -397,7 +397,7 @@ summary(fragst_lm)
 
 ### 6.3.2 Model Evaluation
 
-After we're satisfied no additional variables will improve the fit, we need to evaluate its residuals, collinearity, accuracy, and model coefficients.
+After you're satisfied no additional variables will improve the fit, you need to evaluate residuals, collinearity, accuracy, and model coefficients.
 
 ```{r diagnostics}
 # Standard diagnostic plots for lm() objects
@@ -406,8 +406,8 @@ plot(fragst_lm)
 # Term and partial residual plots
 termplot(fragst_lm, partial.resid = TRUE)
 ```
-
-The **variance inflation factor** (VIF) is used to assess collinearity amongst the predictors. Its square root indicates the amount of increase in the predictor coefficients standard error. A value greater than 2 indicates a doubling the standard error. Rules of thumb vary, but a square root of vif greater than 2 or 3 indicates an unacceptable value.
+**Variance Inflation Factor**
+The variance inflation factor (VIF) assesses collinearity amongst the predictors. Its square root indicates the amount of increase in the standard error of the predictor coefficients. A value greater than 2 indicates a doubling of the standard error. Rules of thumb vary, but a square root of VIF greater than 2 or 3 indicates an unacceptable value.
 
 ```{r}
 # vif() function from the car or rms packages
@@ -417,12 +417,12 @@ sqrt(vif(fragst_lm))
 
 sqrt(vif(fragst_lm)) > 2
 ```
+**Accuracy**
+Accuracy can be assessed using several different metrics.
 
-**Accuracy** can be assessed using several different metrics.
-
-- Adjusted R^2^ = proportion of variance explained
+- Adjusted R^2^ = Proportion of variance explained
 - Root mean square error (RMSE)
-- Mean absolute error(MAE)
+- Mean absolute error (MAE)
 
 ```{r}
 # Adjusted R2
@@ -507,29 +507,27 @@ plot(ca794, add = TRUE)
 
 #### 6.3.2.1 Exercise 2: View the Predictions in ArcGIS
 
-- Examine the raster predictions in ArcGIS  and compare them to your Shapefile that contain the original point observations (hint classify the Shapefile symbology using the frags column)
-- Discuss with your group, and report your observations or hypotheses
+- Examine the raster predictions in ArcGIS  and compare them to your shapefile that contains the original point observations. (Hint: Classify the shapefile symbology using the frags column.)
+- Discuss your findings with your group, and report your observations or hypotheses.
 
 
 ## 6.4 References
 
-Beckett, P.H.T., and R. Webster, 1971. Soil variability: a review. Soils Fertil. 34 (1), 1-15.
+Beckett, P.H.T., and R. Webster. 1971. Soil variability: A review. Soils Fertil. 34(1):1–15.
 
-James, G., D. Witten, T. Hastie, and R. Tibshirani, 2014. An Introduction to Statistical Learning: with Applications in R. Springer, New York. [http://www-bcf.usc.edu/~gareth/ISL/](http://www-bcf.usc.edu/~gareth/ISL/)
+James, G., D. Witten, T. Hastie, and R. Tibshirani. 2014. An introduction to statistical learning: With applications in R. Springer, New York. [http://www-bcf.usc.edu/~gareth/ISL/](http://www-bcf.usc.edu/~gareth/ISL/).
 
-Nauman, T. W., and J. A. Thompson, 2014. Semi-automated disaggregation of conventional soil maps using knowledge driven data mining and classification trees. Geoderma 213:385-399. [http://www.sciencedirect.com/science/article/pii/S0016706113003066](http://www.sciencedirect.com/science/article/pii/S0016706113003066)
+Nauman, T.W., and J.A. Thompson. 2014. Semi-automated disaggregation of conventional soil maps using knowledge driven data mining and classification trees. Geoderma 213:385-399. [http://www.sciencedirect.com/science/article/pii/S0016706113003066](http://www.sciencedirect.com/science/article/pii/S0016706113003066).
 
-Peterson, F.F., 1981. Landforms of the basin and range province: defined for soil survey. Nevada Agricultural Experiment Station Technical Bulletin 28, University of Nevada - Reno, NV. 52 p. [http://jornada.nmsu.edu/files/Peterson_LandformsBasinRangeProvince.pdf](http://jornada.nmsu.edu/files/Peterson_LandformsBasinRangeProvince.pdf)
+Peterson, F.F. 1981. Landforms of the basin and range province: Defined for soil survey. Nevada Agricultural Experiment Station Technical Bulletin 28. University of Nevada-Reno, NV. [http://jornada.nmsu.edu/files/Peterson_LandformsBasinRangeProvince.pdf](http://jornada.nmsu.edu/files/Peterson_LandformsBasinRangeProvince.pdf).
 
-Shi, X., L. Girod, R. Long, R. DeKett, J. Philippe, and T. Burke, 2012. A comparison of LiDAR-based DEMs and USGS-sourced DEMs in terrain analysis for knowledge-based digital soil mapping. Geoderma 170:217-226. [http://www.sciencedirect.com/science/article/pii/S0016706111003387](http://www.sciencedirect.com/science/article/pii/S0016706111003387)
+Shi, X., L. Girod, R. Long, R. DeKett, J. Philippe, and T. Burke. 2012. A comparison of LiDAR-based DEMs and USGS-sourced DEMs in terrain analysis for knowledge-based digital soil mapping. Geoderma 170:217–226. [http://www.sciencedirect.com/science/article/pii/S0016706111003387](http://www.sciencedirect.com/science/article/pii/S0016706111003387).
 
 
 ## 6.5 Additional Reading
 
-Faraway, J.J., 2002. Practical Regression and Anova using R. CRC Press, New York. [https://cran.r-project.org/doc/contrib/Faraway-PRA.pdf](https://cran.r-project.org/doc/contrib/Faraway-PRA.pdf)
+Faraway, J.J. 2002. Practical regression and anova using R. CRC Press, New York. [https://cran.r-project.org/doc/contrib/Faraway-PRA.pdf](https://cran.r-project.org/doc/contrib/Faraway-PRA.pdf).
 
-James, G., D. Witten, T. Hastie, and R. Tibshirani, 2014. An Introduction to Statistical Learning: with Applications in R. Springer, New York. [http://www-bcf.usc.edu/~gareth/ISL/](http://www-bcf.usc.edu/~gareth/ISL/)
+Hengl, T. 2009. A practical guide to geostatistical mapping, 2nd ed. University of Amsterdam. www.lulu.com. ISBN 978-90-9024981-0. [http://spatial-analyst.net/book/system/files/Hengl_2009_GEOSTATe2c0w.pdf](http://spatial-analyst.net/book/system/files/Hengl_2009_GEOSTATe2c0w.pdf).
 
-Hengl, T. 2009. A Practical Guide to Geostatistical Mapping, 2nd Edt. University of Amsterdam, www.lulu.com, 291 p. ISBN 978-90-9024981-0. [http://spatial-analyst.net/book/system/files/Hengl_2009_GEOSTATe2c0w.pdf](http://spatial-analyst.net/book/system/files/Hengl_2009_GEOSTATe2c0w.pdf)
-
-Webster, R. 1997. Regression and functional relations. European Journal of Soil Science, 48, 557-566. [http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2389.1997.tb00222.x/abstract](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2389.1997.tb00222.x/abstract)
+Webster, R. 1997. Regression and functional relations. European Journal of Soil Science. 48:557–566. [http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2389.1997.tb00222.x/abstract](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2389.1997.tb00222.x/abstract).
