@@ -21,7 +21,7 @@ Linear regression has been used for soil survey applications since the early 190
 
 Wilting coefficient = 0.01(sand) + 0.12(silt) + 0.57(clay)
 
-Linear regression, as the name implys, models the linear relationship between a response variable (y) and an predictor variable (x). 
+Linear regression, as the name implies, models the linear relationship between a response variable (y) and an predictor variable (x). 
 
 $f(y) = \beta_{0} + \beta_{1}x + \varepsilon$
 
@@ -41,7 +41,7 @@ In this dataset, you'll encounter some challenges. To start with, fan piedmont l
 
 ### 6.1.1 Load Packages
 
-To start, as always, you need to load some extra R packages. This becomes a familar routine every time you start R. Most of the basic functions you need to develop a linear regression model are contained in base R, but the following packages contain some useful spatial and data manipulation functions. Believe it or not, you will use all of them and more.
+To start, as always, you need to load some extra R packages. This becomes a familiar routine every time you start R. Most of the basic functions you need to develop a linear regression model are contained in base R, but the following packages contain some useful spatial and data manipulation functions. Believe it or not, you will use all of them and more.
 
 ```{r load packages, message=FALSE, warning=FALSE}
 library(aqp) # specialized soil classes and functions
@@ -349,9 +349,9 @@ bwplot(fragst ~ cluster, data = train)
 bwplot(fragst ~ cluster2, data = train)
 ```
 
-The preceding correlation matrices and scatter plots show that surface rock fragments have moderate correlations with some of the variables, particularly the landsat bands and derivatives. This makes sense given that surface rock fragments are at the surface, unlike most soil properties. 
+The preceding correlation matrices and scatter plots show that surface rock fragments have moderate correlations with some of the variables, particularly the Landsat bands and derivatives. This makes sense given that surface rock fragments are at the surface, unlike most soil properties. 
 
-By examining the correlations between some of the predictors, you can also see that some are *collinear* (e.g. > 0.6), such as the landsat bands. Therefore, these variables are redundant because they describe almost the same thing. This collinearity also makes it difficult to estimate regression coefficients. Considering that the dataset already has other derivatives of landsat that are intentionally designed to reduce their collinearity, you can exclude the landsat bands from the dataset altogether.
+By examining the correlations between some of the predictors, you can also see that some are *collinear* (e.g. > 0.6), such as the Landsat bands. Therefore, these variables are redundant because they describe almost the same thing. This collinearity also makes it difficult to estimate regression coefficients. Considering that the dataset already has other derivatives of Landsat that are intentionally designed to reduce their collinearity, you can exclude the Landsat bands from the dataset altogether.
 
 By examining the density plots on the diagonal axis of the scatter plots, you can see that some variables are skewed and others are bimodal. Lastly, the box plot shows a trend among the clusters when sorted according to annual temperature.
 
