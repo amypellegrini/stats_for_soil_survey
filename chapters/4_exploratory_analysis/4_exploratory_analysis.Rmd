@@ -315,11 +315,11 @@ Figure 5.—A Kernel density plot, which depicts a smoothed line of the distribu
 In a histogram, the y-axis represents the number or percent (i.e., frequency) of observations. In a density plot, the y-axis represents the probability of observing any given value such that the area under the curve equals one. Notice how the histogram of clay seems to emphasis the long right tail of values, which might call into question the normality of the distribution. One curious feature of the density curve in figure 5 is the hint of a bimodal distribution. Given that the sample includes a mixture of surface and subsurface horizons, you may have two different populations. However, considering how much the two distributions overlap, separating them seems impractical in this instance.
 
 
-### <a id="qq")></a>4.2.3 Quantile Comparison Plots (QQplot)  
+### <a id="qq")></a>4.2.3 Quantile Comparison Plots (QQ plot)  
 
-A QQplot is a plot of the actual data values against a normal distribution (which has a mean of 0 and a standard deviation of 1).  
+A QQ plot is a plot of the actual data values against a normal distribution (which has a mean of 0 and a standard deviation of 1).  
 
-A QQplot of sand content may be made for the sample dataset as: 
+A QQ plot of sand content may be made for the sample dataset as: 
 
 ```{r}
 qqnorm(h$clay, main = "Normal Q-Q Plot for Clay")
@@ -329,12 +329,12 @@ qqnorm(h$total_frags_pct, main = "Normal Q-Q Plot for Rock Fragments")
 qqline(h$total_frags_pct)
 ```
 
-Figures 6a and 6b.—QQplots.  
+Figures 6a and 6b.—QQ plots.  
 
 The line in figures 6a and 6b represents the quantiles of a normal distribution. If the data set is perfectly normal, the data points fall along the line. Overall, this plot shows the clay in the example to be more-or-less normally distributed. However, the second plot again shows that the rock fragments are far from normally distributed.
 
-A more detailed explanation of QQplots may be found on Wikipedia:  
-[https://en.wikipedia.org/wiki/QQ_plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot). *Editor's note: In general, Wikipedia is not considered a scholarly reference and is not cited. By listing it here, you imply approval of whatever version is online whenever the reader checks. (Let the readers Google QQplots on their own.) I highly recommend you remove these lines. At the very least, add the date you accessed the site.*  
+A more detailed explanation of QQ plots may be found on Wikipedia:  
+[https://en.wikipedia.org/wiki/QQ_plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot). *Editor's note: In general, Wikipedia is not considered a scholarly reference and is not cited. By listing it here, you imply approval of whatever version is online whenever the reader checks. (Let the readers Google QQ plots on their own.) I highly recommend you remove these lines. At the very least, add the date you accessed the site.*  
 
 
 ## <a id="cent")></a>4.3 Measures of Central Tendency  
