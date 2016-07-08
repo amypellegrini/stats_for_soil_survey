@@ -17,7 +17,7 @@ output:
 # Chapter 6: Linear Regression
 ## 6.0 Introduction
 
-Linear regression has been used for soil survey applications since the early 1900s, when Briggs and McLane (1907) developed a pedotransfer function to estimate the wilting coefficient as a function of soil particle size. 
+Linear regression has been used for soil survey applications since the early 1900s. One of the earliest documented examples is from Briggs and McLane (1907), who developed a pedotransfer function to estimate the wilting coefficient as a function of soil particle size. 
 
 Wilting coefficient = 0.01(sand) + 0.12(silt) + 0.57(clay)
 
@@ -514,6 +514,8 @@ plot(ca794, add = TRUE)
 ## 6.4 References
 
 Beckett, P.H.T., and R. Webster. 1971. Soil variability: A review. Soils Fertil. 34(1):1–15.
+
+Briggs, L.J., and J.W. McLane. 1907. The moisture equivalent of soils. Bull. 45. U.S. Department of Agriculture, Bureau of Soils.
 
 James, G., D. Witten, T. Hastie, and R. Tibshirani. 2014. An introduction to statistical learning: With applications in R. Springer, New York. [http://www-bcf.usc.edu/~gareth/ISL/](http://www-bcf.usc.edu/~gareth/ISL/).
 
