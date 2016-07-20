@@ -188,7 +188,7 @@ Now that you've checked for missing values and typos and made corrections, you c
 
 What is a normal distribution, and why should you care? Many statistical methods are based on the properties of a normal distribution. However, applying certain methods to data that are not normally distributed can give misleading or incorrect results. Most methods that assume normality are robust enough for all data except the very abnormal. This section is not meant to be a recipe for decision making. It is intended to extend the tools available to examine your data. 
 
-For the parameters most commonly seen by pedologists, the impact of normality is most commonly seen when documenting the ranges of a variable (i.e., low, RV, and high). Commonly, a rule-of thumb, such as "two standard deviations," is used to define the low and high values of a variable. This is fine if the data are normally distributed. If the data are skewed, however, using the standard deviation as a parameter does not provide useful information about the data distribution. The quantitative measures of kurtosis (peakedness) and skewness (symmetry) can be used to assist in accessing normality. Functions for these measures are in the fBasics package, but Webster (2001) cautions against using significance tests for assessing normality. The preceding sections and chapters demonstrate methods to cope with alternative distributions. *Editor's note: Is "preceding" the correct term?*
+For the parameters most commonly seen by pedologists, the impact of normality is most commonly seen when documenting the ranges of a variable (i.e., low, RV, and high). Commonly, a rule-of thumb, such as "two standard deviations," is used to define the low and high values of a variable. This is fine if the data are normally distributed. If the data are skewed, however, using the standard deviation as a parameter does not provide useful information about the data distribution. The quantitative measures of kurtosis (peakedness) and skewness (symmetry) can be used to assist in accessing normality. Functions for these measures are in the fBasics package, but Webster (2001) cautions against using significance tests for assessing normality. Ensuing sections and chapters demonstrate methods to cope with alternative distributions. *Editor's note: Is "preceding" the correct term?*
 
 A Gaussian distribution is often referred to as the "Bell Curve" and has the following properties (Lane, 2016).  
 
@@ -333,8 +333,8 @@ Figures 6a and 6b.—QQ plots.
 
 The line in figures 6a and 6b represents the quantiles of a normal distribution. If the data set is perfectly normal, the data points fall along the line. Overall, this plot shows the clay in the example to be more-or-less normally distributed. However, the second plot again shows that the rock fragments are far from normally distributed.
 
-A more detailed explanation of QQ plots may be found on Wikipedia:  
-[https://en.wikipedia.org/wiki/QQ_plot](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot). *Editor's note: In general, Wikipedia is not considered a scholarly reference and is not cited. By listing it here, you imply approval of whatever version is online whenever the reader checks. (Let the readers Google QQ plots on their own.) I highly recommend you remove these lines. At the very least, add the date you accessed the site.*  
+A more detailed explanation of QQ plots may be found on the National Institute of Standards and Technology e-Handbook of Statistical Methods:  
+[http://www.itl.nist.gov/div898/handbook/eda/section3/qqplot.htm](http://www.itl.nist.gov/div898/handbook/eda/section3/qqplot.htm).
 
 
 ## <a id="cent")></a>4.3 Measures of Central Tendency  
@@ -453,7 +453,7 @@ sd(clay)
 
 **Coefficient of Variation**  
 
-The coefficient of variation (CV) is a relative (i.e., unitless) measure of standard deviation:![R GUI image](figure/ch4_fig24.jpg). *Editor's note: Please review the image used for the equation. Is it intentional that there are 2 lines separating the numerator and denominator in s//x?* 
+The coefficient of variation (CV) is a relative (i.e., unitless) measure of standard deviation defined as: **CV = (Standard Deviation / Mean) * 100**
 
 CV is calculated by dividing the standard deviation by the mean and multiplying by 100. Because standard deviation varies in magnitude with the value of the mean, the CV is useful for comparing relative variation among different datasets. Webster (2001), however, discourages the use of CV to compare different variables. Webster (2001) also stresses that CV is reserved for variables that have an absolute 0. An example is clay content. CV may be calculated for the sample dataset as the following:  
 
@@ -722,7 +722,7 @@ Figure 11.—A rose diagram.
 
 R Markdown (RMD) is a document format that makes it easy to create reports and other dynamic documents. It allows R code to be mingled with text and executed like an R script. This allows R to generate reports similarly to NASIS. 
 
-Several reports have been developed to generate summaries of pedon and GIS data. Examples can be found at: [https://github.com/ncss-tech/soil-pit/tree/master/examples](https://github.com/ncss-tech/soil-pit/tree/master/examples). Some of the examples show customized reports developed to generate zonal statistics of map units. Instructions can be found at the Soil Survey Region 11 [SharePoint site](https://ems-team.usda.gov/sites/NRCS_SSRA/mo-11/Soils%20%20GIS/Forms/AllItems.aspx?RootFolder=%2Fsites%2FNRCS%5FSSRA%2Fmo%2D11%2FSoils%20%20GIS%2Fguides%2FR&FolderCTID=0x0120007929E36D8FF15644B2C3F1488664C3CD&View=%7BFE55388F%2DFD5F%2D4A7B%2D98BD%2DA1F618066492%7D). Following is a demonstration of how to run an existing RMD file to summarize a series of pedons for a given soil series. *Editor's note: Does it matter that the SharePoint site is only available to NRCS employees?*
+Several reports have been developed to generate summaries of pedon and GIS data. Examples can be found at: [https://github.com/ncss-tech/soil-pit/tree/master/examples](https://github.com/ncss-tech/soil-pit/tree/master/examples). Some of the examples show customized reports developed to generate zonal statistics of map units. The following is a demonstration of how to run an existing RMD file to summarize a series of pedons for a given soil series.
 
 **Objectives**
 
@@ -764,7 +764,7 @@ Several reports have been developed to generate summaries of pedon and GIS data.
 
     ![](figure/ghl_rules.png)
 
-    Pay special attention to how caret "^" and dollar "\$" symbols are used. They function as anti-wildcards. For example, placing "^" before an A horizon (^A) matches any horizon designation that follows A, such as Ap and Ap1. Placing "\$" after a Bt horizon (Bt\$) matches any horizon designation that precedes Bt, such as 2Bt and 3Bt. Encapsulating a horizon with both "^" and "\$" symbols results in only exact matches. For example, ^A$ only matches A, not Ap or A1. *Editor's note: Is the back slash before the dollar sign correct?  If so, should it be in the last sentence also?*
+    Pay special attention to how caret "^" and dollar "\$" symbols are used. They function as anti-wildcards. For example, placing "^" before an A horizon (^A) matches any horizon designation that follows A, such as Ap and Ap1. Placing "\$" after a Bt horizon (Bt\$) matches any horizon designation that precedes Bt, such as 2Bt and 3Bt. Encapsulating a horizon with both "^" and "\$" symbols results in only exact matches. For example, ^A\$ only matches A, not Ap or A1.
 
 5.	Enter or replace the soil series of interest, and click the **Knit HTML** button. Be sure to encase the name of the soil series in quotations. You can use either double or single quotation marks, e.g., `"series"` or `'series'`.
 
@@ -790,7 +790,7 @@ Several reports have been developed to generate summaries of pedon and GIS data.
 
 To summarize spatial data for a polygon, some form of zonal statistics can be used. "Zonal statistics" is a generic term for statistics that aggregate data for an area or zone (e.g., a set of map unit polygons). Two methods are available: census-survey and sample-survey. 
 
-The most common method, which is provided by most GIS, is the census-survey method. This method computes a statistical summary of all the raster cells that overlap a polygon or map unit. This approach is generally faster and provides a complete summary of the spatial data. An alternative approach is the sample-survey method, which takes a collection of random samples from each polygon or map unit. Although the sample approach is generally slower and does not sample every cell that overlaps a polygon, it does offer certain advantages. For example, the census approach typically only provides basic statistics, such as minimum, maximum, mean, standard deviation, and sum. For skewed data sets, however, the mean and standard deviation may be unreliable. A better alternative for skewed data sets is to use nonparametric statistics, such as quantiles. Examples of nonparametric statistics are covered in Chapter 4. The advantage of the sample-survey approach is that it allows you to utilize alternative statistics, such as quantiles, to perform a more thorough exploratory analysis. Some people prefer the census approach because it provides a complete summary of all the data that overlaps a map unit. It is important, however, to remember that all spatial data are only approximations of the physical world and therefore are only estimates with varying levels of precision. *Editor's note: This paragraph states "Examples of nonparametric statistics are covered in Chapter 4." This is Chapter 4. If this is a correct statement, please clarify if you mean all sections of this chapter or specific sections.*
+The most common method, which is provided by most GIS, is the census-survey method. This method computes a statistical summary of all the raster cells that overlap a polygon or map unit. This approach is generally faster and provides a complete summary of the spatial data. An alternative approach is the sample-survey method, which takes a collection of random samples from each polygon or map unit. Although the sample approach is generally slower and does not sample every cell that overlaps a polygon, it does offer certain advantages. For example, the census approach typically only provides basic statistics, such as minimum, maximum, mean, standard deviation, and sum. For skewed data sets, however, the mean and standard deviation may be unreliable. A better alternative for skewed data sets is to use nonparametric statistics, such as quantiles. The advantage of the sample-survey approach is that it allows you to utilize alternative statistics, such as quantiles, to perform a more thorough exploratory analysis. Some people prefer the census approach because it provides a complete summary of all the data that overlaps a map unit. It is important, however, to remember that all spatial data are only approximations of the physical world and therefore are only estimates with varying levels of precision. *Editor's note: This paragraph states "Examples of nonparametric statistics are covered in Chapter 4." This is Chapter 4. If this is a correct statement, please clarify if you mean all sections of this chapter or specific sections.*
 
 Before you extract spatial data for spatial predictions, the data must meet the following conditions:  
 
@@ -930,7 +930,7 @@ Note: If you move the geospatial data used in an existing Toolkit project, you w
  ![R GUI image](figure/ch5_fig15.jpg)  
  
 **Analysis Features** are zones within which you would like to generate statistics. Analysis features
-can be feature classes such as polygons or points (line features will be available soon) in a shapefile (SHP); feature classes within a file geodatabase; or a feature dataset within a file geodatabase. Analysis features can also be in the form of a discrete raster. The value field is used as the identifier.  *Editors note: Please review the second sentence carefully. I had to make some assumptions that may not be correct.*
+can be the polygon or point features of a shapefile (SHP) or file geodatabase. Analysis features can also be in the form of a discrete raster. The value field is used as the identifier.
 
 **Rasters** are the raster data used to generate descriptive statistics. Examples include a digital elevation model (DEM), percent slope, aspect, or land use for a discrete raster.  
 
